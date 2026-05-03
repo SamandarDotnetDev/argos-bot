@@ -64,7 +64,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;backgrou
 .qn.active{background:#6366f1}
 .qn.correct{background:#22c55e}
 .qn.wrong{background:#ef4444}
-.qn.answered{background:#93c5fd}
+.qn.answered{background:#6366f1;opacity:.6}
 
 /* QUESTION AREA */
 .q-area{flex:1;overflow-y:auto;-webkit-overflow-scrolling:touch;padding:12px}
@@ -356,26 +356,43 @@ function renderQ(){
 
 function selectAnswer(sel){
   if(confirmed[curIdx]!==undefined)return;
+  // Javobni saqlash (tasdiqlanmagan)
   answers[curIdx]=sel;
-  renderQ();
+  updateGrid();
+  // Variantlarni yangilash
+  document.querySelectorAll(".opt").forEach((btn,i)=>{
+    btn.className="opt";
+    if(i===sel)btn.classList.add("selected");
+    btn.innerHTML=`<span class="radio"></span>${questions[curIdx].options[i]}`;
+    btn.onclick=()=>selectAnswer(i);
+  });
+}
+
+function confirmAnswer(idx){
+  // Keyingi/Tugatish bosilganda javobni tasdiqlash
+  if(answers[idx]===undefined||confirmed[idx]!==undefined)return;
+  const q=questions[idx];
+  const sel=answers[idx];
+  const isCorrect=sel===q.correct;
+  confirmed[idx]=isCorrect;
+  fetch(`${API}/answer`,{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({user_id:UID,question_id:q.id,selected:sel})}).catch(()=>{});
 }
 
 function submitAns(sel){
   if(confirmed[curIdx]!==undefined)return;
-  const q=questions[curIdx];
   answers[curIdx]=sel;
-  const isCorrect=sel===q.correct;
-  confirmed[curIdx]=isCorrect;
-  fetch(`${API}/answer`,{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({user_id:UID,question_id:q.id,selected:sel})}).catch(()=>{});
   renderQ();
-  if(Object.keys(confirmed).length===questions.length){
-    setTimeout(()=>{if(confirm("Barcha savollarga javob berdingiz! Natijani ko'rasizmi?"))finish();},500);
-  }
 }
 
 function goQ(dir){
+  // Joriy savolni tasdiqlash
+  confirmAnswer(curIdx);
   const nx=curIdx+dir;
-  if(nx<0||nx>=questions.length)return;
+  if(nx<0||nx>=questions.length){
+    // Tugatish bosildi
+    if(nx>=questions.length) finish();
+    return;
+  }
   curIdx=nx;renderQ();
   document.getElementById("q-area").scrollTop=0;
 }
