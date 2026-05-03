@@ -63,7 +63,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;backgrou
 .qn:active{transform:scale(.9)}
 .qn.active{background:#6366f1}
 .qn.correct{background:#22c55e}
-.qn.wrong{background:#ef4444}
+.qn.wrong{background:#22c55e}
 .qn.answered{background:#6366f1;opacity:.6}
 
 /* QUESTION AREA */
@@ -356,16 +356,19 @@ function renderQ(){
 
 function selectAnswer(sel){
   if(confirmed[curIdx]!==undefined)return;
-  // Javobni saqlash (tasdiqlanmagan)
   answers[curIdx]=sel;
+  // Avtomatik tasdiqlash va keyingi savolga o'tish
+  confirmAnswer(curIdx);
   updateGrid();
-  // Variantlarni yangilash
-  document.querySelectorAll(".opt").forEach((btn,i)=>{
-    btn.className="opt";
-    if(i===sel)btn.classList.add("selected");
-    btn.innerHTML=`<span class="radio"></span>${questions[curIdx].options[i]}`;
-    btn.onclick=()=>selectAnswer(i);
-  });
+  setTimeout(()=>{
+    const nx=curIdx+1;
+    if(nx<questions.length){
+      curIdx=nx;renderQ();
+      document.getElementById("q-area").scrollTop=0;
+    } else {
+      finish();
+    }
+  }, 400);
 }
 
 function confirmAnswer(idx){
