@@ -6,7 +6,7 @@ logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
 BOT_TOKEN = "8772060197:AAEINRgmN5dtrR42hHq1yLDyrs-jdz0M4BM"
-MINI_APP_URL = "https://bu-yerga-domeningizni-yozing.com"
+MINI_APP_URL = "argos-bot.railway.internal"
 
 async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
     user = update.effective_user
