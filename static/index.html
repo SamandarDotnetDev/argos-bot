@@ -426,20 +426,28 @@ async function showN(){
 
 function qayta(){startTest();}
 
-function loadM(){
-  mistakeList=questions.filter((_,i)=>answers[i]&&!answers[i].correct);
-  const wrap=document.getElementById("m-list");wrap.innerHTML="";
-  if(mistakeList.length===0){
-    wrap.innerHTML='<div class="empty">🎉 Xato yo\'q! Ajoyib natija!</div>';
-    document.getElementById("retry-btn").style.display="none";return;
+async function loadM(){
+  const wrap=document.getElementById("m-list");
+  wrap.innerHTML='<div class="empty">Yuklanmoqda...</div>';
+  try{
+    const res=await fetch(`${API}/mistakes?user_id=${UID}`);
+    mistakeList=await res.json();
+    wrap.innerHTML="";
+    if(mistakeList.length===0){
+      wrap.innerHTML='<div class="empty">🎉 Xato yo\'q! Ajoyib natija!</div>';
+      document.getElementById("retry-btn").style.display="none";
+      return;
+    }
+    document.getElementById("retry-btn").style.display="block";
+    mistakeList.forEach(q=>{
+      const d=document.createElement("div");
+      d.className="m-item";
+      d.innerHTML=`<div class="m-q">${q.question}</div><div class="m-ans">✅ To'g'ri: ${q.options[q.correct]}</div>`;
+      wrap.appendChild(d);
+    });
+  }catch(e){
+    wrap.innerHTML='<div class="empty">❌ Xatolarni yuklashda muammo</div>';
   }
-  document.getElementById("retry-btn").style.display="block";
-  mistakeList.forEach(q=>{
-    const d=document.createElement("div");
-    d.className="m-item";
-    d.innerHTML=`<div class="m-q">${q.question}</div><div class="m-ans">✅ To'g'ri: ${q.options[q.correct]}</div>`;
-    wrap.appendChild(d);
-  });
 }
 
 function retryMistakes(){
