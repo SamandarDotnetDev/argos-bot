@@ -402,20 +402,26 @@ function goQ(dir){
 
 function finish(){clearInterval(timerInt);showN();show("natija");}
 
-function showN(){
-  const tot=questions.length;
-  const cor=Object.values(confirmed).filter(v=>v===true).length;
-  const ball=(cor*0.5).toFixed(1);
-  document.getElementById("n-jami").textContent=tot;
-  document.getElementById("n-togri").textContent=cor;
-  document.getElementById("n-ball").textContent=ball;
-  document.getElementById("n-fan").textContent=bolimName||"—";
-  document.getElementById("n-s").textContent=tot;
-  document.getElementById("n-t").textContent=cor;
-  document.getElementById("n-b").textContent=ball;
-  document.getElementById("n-js").textContent=tot;
-  document.getElementById("n-jt").textContent=cor;
-  document.getElementById("n-jb").textContent=ball;
+async function showN(){
+  try{
+    const res=await fetch(`${API}/stats?user_id=${UID}`);
+    const data=await res.json();
+    const tot=data.total||0;
+    const cor=data.correct||0;
+    const ball=(cor*0.5).toFixed(1);
+    document.getElementById("n-jami").textContent=tot;
+    document.getElementById("n-togri").textContent=cor;
+    document.getElementById("n-ball").textContent=ball;
+    document.getElementById("n-fan").textContent=bolimName||"—";
+    document.getElementById("n-s").textContent=tot;
+    document.getElementById("n-t").textContent=cor;
+    document.getElementById("n-b").textContent=ball;
+    document.getElementById("n-js").textContent=tot;
+    document.getElementById("n-jt").textContent=cor;
+    document.getElementById("n-jb").textContent=ball;
+  }catch(e){
+    console.error("Stats xatosi:",e);
+  }
 }
 
 function qayta(){startTest();}
