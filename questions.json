@@ -1,17 +1,674 @@
 [
   {
     "id": 1,
-    "question": "Normal arterial bosim normasi qaysi?",
-    "options": ["100/60 mmHg", "120/80 mmHg", "140/90 mmHg", "160/100 mmHg"],
+    "question": "DMED tizimida avtorizatsiya qanday amalga oshiriladi?",
+    "options": ["Login va parol orqali", "JSHSHIR va himoya kodi orqali", "Telefon raqami orqali", "Elektron pochta orqali"],
     "correct": 1,
-    "explanation": "Normal arterial bosim 120/80 mmHg hisoblanadi."
+    "explanation": ""
   },
   {
     "id": 2,
-    "question": "Yurak urishi normasi (bir daqiqada)?",
-    "options": ["40-50", "60-100", "100-120", "120-140"],
+    "question": "DMED tizimini joriy etishning asosiy vazifalari qanday?",
+    "options": ["Elektron tibbiy hujjatlarni joriy etish", "Muassasa byudjetini nazorat qilish", "Dori vositalarini hisobga olish", "Barcha javoblar to'g'ri"],
+    "correct": 3,
+    "explanation": ""
+  },
+  {
+    "id": 3,
+    "question": "DMED qo'llab-quvvatlash xizmati bilan qanday usullar orqali bog'lanish mumkin?",
+    "options": ["Telefon raqami va tizimdagi chat orqali", "Telefon raqami va Telegram bot orqali", "Telefon raqami, Telegram bot va chat orqali", "DMED tizimida qo'llab-quvvatlash xizmati yo'q"],
+    "correct": 2,
+    "explanation": ""
+  },
+  {
+    "id": 4,
+    "question": "Bemor qaysi mobil ilova orqali shifokarga yozilishi mumkin?",
+    "options": ["DMED PRO", "DMED", "DMED MONITOR", "MUXLISA"],
     "correct": 1,
-    "explanation": "Kattalar uchun normal yurak urishi 60-100 marta/daqiqa."
+    "explanation": ""
+  },
+  {
+    "id": 5,
+    "question": "DMED tizimida bemorning yagona identifikatori (Med ID) qanday beriladi?",
+    "options": ["Bemor o'zi uchun Med ID tanlaydi", "Shifokor bemorga Med ID beradi", "Med ID tizim tomonidan avtomatik ravishda beriladi", "Tizimda Med ID yo'q"],
+    "correct": 2,
+    "explanation": ""
+  },
+  {
+    "id": 6,
+    "question": "Bemor o'zini poliklinikaga mustaqil ravishda biriktirishi mumkinmi?",
+    "options": ["Ha, mobil ilova yoki MyGov orqali", "Yo'q, faqat shifokor biriktira oladi"],
+    "correct": 0,
+    "explanation": ""
+  },
+  {
+    "id": 7,
+    "question": "DMED tizimida rasmiy hujjat aylanishi reestri sifatida qaysi internet-manba ishlatiladi?",
+    "options": ["docs.dmed.uz", "dmed.uz.docs", "documents.dmed.uz", "DMED tizimida hujjat aylanishi reestri yo'q"],
+    "correct": 0,
+    "explanation": ""
+  },
+  {
+    "id": 8,
+    "question": "DMED tizimida qanday maxfiylik turi mavjud?",
+    "options": ["Shifokor darajasidagi maxfiylik", "Muassasa darajasidagi maxfiylik", "Tuman darajasidagi maxfiylik", "Tizimda maxfiylik yo'q"],
+    "correct": 0,
+    "explanation": ""
+  },
+  {
+    "id": 9,
+    "question": "Bemor 1-marta DTMga murojaat qilganda qabulga yozish qanday amalga oshiriladi?",
+    "options": ["Pasport ma'lumotlari/tug'ilganlik haqidagi guvohnoma bo'yicha", "Bemorning FISH/Med ID bo'yicha", "Med ID bo'yicha", "MyID bo'yicha"],
+    "correct": 0,
+    "explanation": ""
+  },
+  {
+    "id": 10,
+    "question": "Bemorni qayta qabulga yozish uchun qanday ma'lumotlar zarur?",
+    "options": ["Med ID/MyID", "Med ID/tug'ilganlik haqidagi guvohnoma/pasport", "MyID/Med ID/bemorning FISH", "Pasport/tug'ilganlik haqidagi guvohnoma"],
+    "correct": 1,
+    "explanation": ""
+  },
+  {
+    "id": 11,
+    "question": "Birinchi tashrif paytida bemorning rasmini qanday to'g'ri olish kerak?",
+    "options": ["MyID bo'limiga o'tib, 'bemorni fotoga olish' tugmasini bosish", "Bemorni topish, 'yangilash' tugmasini bosish, keyin bemorni fotoga olish", "Bemorni topish, 'fotoni yangilash' tugmasini bosish", "Barcha javoblar to'g'ri"],
+    "correct": 1,
+    "explanation": ""
+  },
+  {
+    "id": 12,
+    "question": "Hujjatlari yo'q bemorni qo'shishda qaysi maydonlarni to'ldirish kerak?",
+    "options": ["FISH/tug'ilgan sana/jins", "FISH/jins", "FISH/tug'ilgan sana", "Bunday imkon yo'q"],
+    "correct": 0,
+    "explanation": ""
+  },
+  {
+    "id": 13,
+    "question": "Tizimda xorijiy bemor (norezident)ni qidirish qanday ma'lumotlar bo'yicha amalga oshiriladi?",
+    "options": ["Pasport ma'lumotlari bo'yicha", "FISH yoki tibbiy karta bo'yicha", "MyID bo'yicha", "To'g'ri javob yo'q"],
+    "correct": 0,
+    "explanation": ""
+  },
+  {
+    "id": 14,
+    "question": "'Qabullar-Aktiv' bo'limida bemorlarning qanday statuslari mavjud?",
+    "options": ["Taklif qilingan/qabulda", "Taklif qilingan/qabulda/navbatda", "Navbatda/qabulda", "Tugatilgan/bekor qilingan"],
+    "correct": 1,
+    "explanation": ""
+  },
+  {
+    "id": 15,
+    "question": "Reimbursatsiya va oddiy retsept o'rtasida qanday farq bor?",
+    "options": ["Oddiy retseptlarni bemor bepul oladi, reimbursatsiyani o'z hisobiga sotib oladi", "Ikkala retseptni ham bemor Sug'urta fondi hisobiga bepul asosda oladi", "Reimbursatsiya retseptlari Sug'urta fondi hisobiga qoplanadi, oddiylarini bemor o'z hisobiga sotib olishga majbur", "To'g'ri javob yo'q"],
+    "correct": 2,
+    "explanation": ""
+  },
+  {
+    "id": 16,
+    "question": "Reimbursatsiya retseptida 'Tabletkalar' chiqarish shakli bo'lgan preparatni bemorga qancha miqdorda yozish mumkin?",
+    "options": ["30 yoki 60 dona miqdorida", "30 donagacha miqdorida", "60 donagacha miqdorida", "Sug'urta fondi har bir konkret savdo nomi uchun belgilagan miqdorda"],
+    "correct": 3,
+    "explanation": ""
+  },
+  {
+    "id": 17,
+    "question": "Shifokor yoki amaliyotchi hamshira bemorni ko'rigini boshlash uchun qanday harakatlarni qilishi kerak?",
+    "options": ["'Qabullar-Aktiv' bo'limida bemorni topish, uni qabulga chaqirish, yangi murojaat epizodini yaratish", "'Qabullar-Aktiv' bo'limida bemorni topish, uni qabulga chaqirish, yangi murojaat epizodini yaratish yoki eskisini davom ettirish", "'Qabullar-Aktiv' bo'limida bemorni topish, qabulni boshlash, bemorni qabulga chaqirish, yangi murojaat epizodini yaratish yoki eskisini davom ettirish", "'Qabullar-Aktiv' bo'limida bemorni topish, uni qabulga chaqirish, qabulni boshlash, yangi murojaat epizodini yaratish yoki eskisini davom ettirish"],
+    "correct": 3,
+    "explanation": ""
+  },
+  {
+    "id": 18,
+    "question": "Shifokor boshqa mutaxassisga yozilgan bemorni qabul qila oladimi?",
+    "options": ["Ha", "Yo'q"],
+    "correct": 0,
+    "explanation": ""
+  },
+  {
+    "id": 19,
+    "question": "Bemorni vaqtga emas, balki jonli navbatga yozish mumkinmi?",
+    "options": ["Ha, bemorni jonli navbatga yozish mumkin, lekin faqat joriy sanaga", "Ha, bemorni jonli navbatga har qanday sanaga yozish mumkin", "Ha, lekin faqat shifokorda jonli navbat bo'yicha qabul funksiyasi yoqilgan bo'lsa", "Yo'q, jonli navbatga yozish mavjud emas"],
+    "correct": 2,
+    "explanation": ""
+  },
+  {
+    "id": 20,
+    "question": "Shifokor ko'rik paytida bemorni boshqa mutaxassisga yo'naltira oladimi?",
+    "options": ["Ha, oladi, murojaat epizodidagi '+Uchrashuv' tugmasi orqali", "Yo'q, bu faqat registratorga ruxsat etilgan"],
+    "correct": 0,
+    "explanation": ""
+  },
+  {
+    "id": 21,
+    "question": "Qanday davolash turi bilan yo'naltirish uchun direktor tasdig'i kerak emas?",
+    "options": ["Statsionar", "Ambulator"],
+    "correct": 1,
+    "explanation": ""
+  },
+  {
+    "id": 22,
+    "question": "Gospitalizatsiya yo'naltirishisiz bemorni statsionarga rasmiylashtirish mumkinmi?",
+    "options": ["Ha, bemorni yo'naltirishsiz rasmiylashtirish mumkin", "Yo'q, statsionarga rasmiylashtirish uchun mutlaqo yo'naltirish zarur"],
+    "correct": 0,
+    "explanation": ""
+  },
+  {
+    "id": 23,
+    "question": "Bemor profilida qanday ma'lumotlarni ko'rish mumkin?",
+    "options": ["Shaxsiy ma'lumotlar/pasport ma'lumotlari/manzil/boshqa", "Ish haqida/aloqa ma'lumotlari/hujjatlar", "Biriktirish/so'rovnomalar/qarindoshlar/o'lim haqida ma'lumot", "Barcha javoblar to'g'ri"],
+    "correct": 3,
+    "explanation": ""
+  },
+  {
+    "id": 24,
+    "question": "O'tkazilgan skrining ma'lumotlarini tahrirlash mumkinmi?",
+    "options": ["Ha, har qanday vaqtda mumkin", "Yo'q, mumkin emas", "Ha, lekin faqat to'ldirgandan keyin 24 soat ichida", "Ha, lekin faqat to'ldirgandan keyin bir soat ichida"],
+    "correct": 2,
+    "explanation": ""
+  },
+  {
+    "id": 25,
+    "question": "Bemorning antropometrik ma'lumotlari qaerga kiritiladi?",
+    "options": ["Kasallik tarixidagi 'Antropometriya' bo'limiga 'Yangilash' tugmasi orqali", "Murojaat epizodidagi 'Antropometriya' bo'limiga 'Yangilash' tugmasi orqali", "Tibbiy kartadagi 'Antropometriya' bo'limiga 'Yangilash' tugmasi orqali", "Profildagi 'Antropometriya' bo'limiga 'Yangilash' tugmasi orqali"],
+    "correct": 1,
+    "explanation": ""
+  },
+  {
+    "id": 26,
+    "question": "Shifokor bemorning ko'rik tarixini ko'ra oladimi?",
+    "options": ["Ha, bemor tibbiy kartasidagi 'Joriy ko'rik' bo'limida", "Ha, bemor tibbiy kartasidagi 'Diagnostika' bo'limida", "Ha, bemor tibbiy kartasidagi 'Ko'riklar' bo'limida", "Yo'q, ko'ra olmaydi"],
+    "correct": 2,
+    "explanation": ""
+  },
+  {
+    "id": 27,
+    "question": "Xodimlardan kimlar reimbursatsiya retseptlarini yoza oladi?",
+    "options": ["Oila shifokorlari", "Tor mutaxassislar", "Amaliyotchi hamshira", "Barcha shifokorlar"],
+    "correct": 3,
+    "explanation": ""
+  },
+  {
+    "id": 28,
+    "question": "Bemorni patronaj rejasiga qo'shish uchun qanday harakatlarni qilish kerak?",
+    "options": ["'Patronaj-Rejalashtirish' bo'limida bemorni topish, amaliyotchi hamshirani tanlash, patronaj maqsadini ko'rsatish, belgi qo'yish", "'Patronaj-Rejalashtirilgan' bo'limida bemorni topish, amaliyotchi hamshirani tanlash, belgi qo'yish", "'Patronaj-Rejalashtirish' bo'limida bemorni topish, patronaj hamshirasini tanlash, patronaj maqsadini ko'rsatish, belgi qo'yish", "'Patronaj-Rejalashtirilgan' bo'limida bemorni topish, patronaj hamshirasini tanlash, patronaj maqsadini ko'rsatish, belgi qo'yish"],
+    "correct": 2,
+    "explanation": ""
+  },
+  {
+    "id": 29,
+    "question": "Bemorga bir vaqtning o'zida bir nechta analizni tayinlash mumkinmi?",
+    "options": ["Ha, turli guruhlardan bir nechta analizni birdan tanlash mumkin", "Faqat bitta guruh doirasida bir nechta analizni tanlash mumkin", "Har bir guruhdan bittadan analizni tanlash mumkin", "Yo'q, faqat bitta analizni tanlash mumkin"],
+    "correct": 0,
+    "explanation": ""
+  },
+  {
+    "id": 30,
+    "question": "Fizioterapevtik kursni qo'shish uchun nima qilish kerak?",
+    "options": ["Yaratilgan davolash kursi sahifasida 'Davolash rejasini qo'shish' tugmasini bosish va 'Fizioterapiya'ni tanlash", "Murojaat epizodida '+ Fizioterapiya' tugmasini bosish", "Kasallik tarixida '+ Fizioterapiya' tugmasini bosish", "Bemorning tibbiy kartasidagi 'Davolash kursi' bo'limchasida 'Fizioterapiya' tugmasini bosish"],
+    "correct": 3,
+    "explanation": ""
+  },
+  {
+    "id": 31,
+    "question": "Bemorning tibbiy kartasidagi 'Joriy ko'rik' bo'limida 'Homiladorlik (Hisobga olish)' murojaat epizodi avtomatik yaratilishi uchun nima qilish kerak?",
+    "options": ["Bemorni homiladorlik hisobiga qo'yish", "Murojaat epizodida O00–O99 guruhidan diagnoz tanlash", "Bemorning tibbiy kartasida homilador anketasini to'ldirish", "'Qabullar' bo'limida murojaat turini 'Homiladorlik (Hisobga olish)' tanlash"],
+    "correct": 1,
+    "explanation": ""
+  },
+  {
+    "id": 32,
+    "question": "Biksni qayta sterilizatsiyaga yuborish mumkinmi?",
+    "options": ["Ha, mumkin", "Ha, mumkin, lekin faqat yangi biks yaratib", "Ha, mumkin, lekin faqat ruxsat olgandan keyin", "Yo'q, mumkin emas"],
+    "correct": 0,
+    "explanation": ""
+  },
+  {
+    "id": 33,
+    "question": "Bemorga qanday sog'liq guruhlarini ko'rsatish mumkin?",
+    "options": ["I-II guruh", "I-II-III guruhlar", "I-II-III-IV guruhlar", "To'g'ri javob yo'q"],
+    "correct": 2,
+    "explanation": ""
+  },
+  {
+    "id": 34,
+    "question": "Tizimga yangi foydalanuvchi qanday qo'shiladi?",
+    "options": ["Buxgalteriya bo'limida", "Foydalanuvchilar/shifokorlar bo'limida", "Foydalanuvchilar/xodimlar bo'limida", "Xodimlar tizimga avtomatik qo'shiladi"],
+    "correct": 2,
+    "explanation": ""
+  },
+  {
+    "id": 35,
+    "question": "Bitta xodimga bir nechta rolni biriktirish mumkinmi?",
+    "options": ["Ha", "Yo'q"],
+    "correct": 0,
+    "explanation": ""
+  },
+  {
+    "id": 36,
+    "question": "Jurnallarni qaysi bo'limda ko'rish mumkin?",
+    "options": ["Hujjatlar – jurnallar uchun ma'lumot kiritish bo'limida", "Hujjatlar – SSV hisobotlari bo'limida", "Hujjatlar – jurnallar bo'limida", "Tizimda bunday imkon yo'q"],
+    "correct": 2,
+    "explanation": ""
+  },
+  {
+    "id": 37,
+    "question": "Tizimda avtomatik shakllantirilgan jurnallardagi ma'lumotlar qancha tez-tez yangilanadi?",
+    "options": ["Ma'lumotlar tizimga kiritilgandan so'ng darhol yangilanadi", "Ma'lumotlar tizimga kiritilgandan so'ng 10 daqiqa ichida yangilanadi", "Ma'lumotlar tizimga kiritilgandan so'ng soat ichida yangilanadi", "Ma'lumotlar jurnalda keyingi kun ertalabigacha ko'rinadi"],
+    "correct": 0,
+    "explanation": ""
+  },
+  {
+    "id": 38,
+    "question": "Natijasi kiritilgan analizni bekor qilish mumkinmi?",
+    "options": ["Ha", "Yo'q"],
+    "correct": 1,
+    "explanation": ""
+  },
+  {
+    "id": 39,
+    "question": "Hamshiraga qanday bo'limlar ochiq?",
+    "options": ["Qabullar/bemorlar/patronaj/statsionar", "Qabullar/bemorlar/patronaj/ombor", "Qabullar/bemorlar/patronaj", "Qabullar/bemorlar/patronaj/statsionar/ombor"],
+    "correct": 2,
+    "explanation": ""
+  },
+  {
+    "id": 40,
+    "question": "Davolash kursi paytida preparatga allergik reaktsiya ko'rsatilgandan so'ng amalni bekor qilish mumkinmi?",
+    "options": ["Ha, mumkin", "Ha, lekin faqat amal boshqa mutaxassis tomonidan tasdiqlanmagan bo'lsa", "Ha, lekin faqat ko'rsatilgandan keyin bir soat ichida", "Yo'q, mumkin emas"],
+    "correct": 3,
+    "explanation": ""
+  },
+  {
+    "id": 41,
+    "question": "Agar shifokor murojaat epizodidan bemorni gospitalizatsiyaga yo'naltirsa, nimani qilmaganda u gospitalizatsiya yo'naltirishini yarata olmaydi?",
+    "options": ["Murojaat epizodida murojaat sababini ko'rsatmaganda", "Murojaat epizodida bemorni d-hisobga qo'ymaganda", "Murojaat epizodida MKB-10 bo'yicha hech bo'lmaganda bitta diagnoz qo'ymaganda", "Murojaat epizodidan yo'naltirish yaratish uchun hech qanday majburiy shartlar yo'q"],
+    "correct": 2,
+    "explanation": ""
+  },
+  {
+    "id": 42,
+    "question": "Yo'naltirish yaratishda bir nechta gospitalizatsiya maqsadini tanlash mumkinmi?",
+    "options": ["Ha, mumkin", "Yo'q, mumkin emas"],
+    "correct": 1,
+    "explanation": ""
+  },
+  {
+    "id": 43,
+    "question": "Poliklinikadan gospitalizatsiyaga yo'naltirilgan bemorlar tizimning qaysi bo'limiga tushadi?",
+    "options": ["Qabullar → Aktiv", "Statsionar → Jarayonda", "Qabul bo'limi → Yo'llanmalar", "Gospitalizatsiya → Yaratilgan"],
+    "correct": 2,
+    "explanation": ""
+  },
+  {
+    "id": 44,
+    "question": "Shifokor qaysi statsionar ko'rigini faqat bir marta o'tkazishi oladi?",
+    "options": ["Bo'limdagi ko'rik", "Birlamchi ko'rik", "Tor mutaxassis ko'rigi", "Barcha ko'riklarni necha marta bo'lishidan qilish mumkin"],
+    "correct": 1,
+    "explanation": ""
+  },
+  {
+    "id": 45,
+    "question": "Bemorni statsionarga rasmiylashtirganda nima avtomatik ochiladi?",
+    "options": ["Tibbiy karta", "Profil", "Kasallik tarixi", "Hech narsa ochilmaydi"],
+    "correct": 2,
+    "explanation": ""
+  },
+  {
+    "id": 46,
+    "question": "Kasallik tarixida 096 formasini ochish uchun qanday amalni bajarish kerak?",
+    "options": ["Bemorni tug'ruqxonaga joylashtirish", "096 forma faqat tug'ruqxona va perinatal markazlarda avtomatik ochiladi", "Joylashtirishda gospitalizatsiya maqsadini faqat 'Tug'ish' tanlash", "Bemor ayol jinsida bo'lishi kerak"],
+    "correct": 2,
+    "explanation": ""
+  },
+  {
+    "id": 47,
+    "question": "Bemorni statsionarning boshqa bo'limiga ko'chirish mumkinmi?",
+    "options": ["Ha, mumkin, agar boshqa bo'limda bo'sh palatalar bo'lsa", "Yo'q, mumkin emas, ko'chirish faqat joriy bo'lim ichida mavjud"],
+    "correct": 0,
+    "explanation": ""
+  },
+  {
+    "id": 48,
+    "question": "Gospitalizatsiyani tugatish uchun qaysi hujjat mutlaqo to'ldirilishi kerak?",
+    "options": ["Chiqarish epikrizi", "Klinik diagnoz asoslashi", "Bo'limdagi ko'rik", "Bosqichma-bosqich epikriz"],
+    "correct": 0,
+    "explanation": ""
+  },
+  {
+    "id": 49,
+    "question": "Hamshira qaysi omborning tovar qoldiqlarini ko'rib chiqishga ruxsati bor?",
+    "options": ["Ombor mudiri uni biriktirgan omborning tovar qoldiqlari", "Markaziy ombordagi tovar qoldiqlari", "Barcha omborlarning tovar qoldiqlari", "Hamshirada biror omborning tovar qoldiqlarini ko'rib chiqish imkoniyati yo'q"],
+    "correct": 0,
+    "explanation": ""
+  },
+  {
+    "id": 50,
+    "question": "Laborant tahlil natijalarini tizimga kiritgandan so'ng nima qilish kerak?",
+    "options": ["Tahlilni tasdiqlash", "Tahlilni chop etish", "Tahlilni shifokorga yuborish", "Tahlilni bemorga yuborish"],
+    "correct": 0,
+    "explanation": ""
+  },
+  {
+    "id": 51,
+    "question": "Quyidagi qurilmalarning qaysi biri yordamida Internetga ulanish mumkin?",
+    "options": ["Modem, router, Wi-Fi adapter", "Modem, router, smartfon, kompyuter", "Modem, router, Wi-Fi adapter, smartfon, kompyuter", "Modem, router, mobil modem, Wi-Fi adapter"],
+    "correct": 3,
+    "explanation": ""
+  },
+  {
+    "id": 52,
+    "question": "Kursorni harakatlantirish uchun qaysi qurilma ishlatiladi?",
+    "options": ["Sichqoncha (mouse)", "Klavyatura", "Mikrofon", "Skanner"],
+    "correct": 0,
+    "explanation": ""
+  },
+  {
+    "id": 53,
+    "question": "Skanner nima?",
+    "options": ["Qog'oz hujjat yoki suratni raqamli formatga aylantiruvchi qurilma", "Video chiqishni monitorga uzatuvchi qurilma", "Grafik protsessor turi", "Ma'lumotlarni doimiy saqlash uchun ishlatiladi"],
+    "correct": 0,
+    "explanation": ""
+  },
+  {
+    "id": 54,
+    "question": "Printer qaysi turga kiradi?",
+    "options": ["Kirish qurilmasi", "Chiqish qurilmasi", "Xotira qurilmasi", "Tarmoq qurilmasi"],
+    "correct": 1,
+    "explanation": ""
+  },
+  {
+    "id": 55,
+    "question": "Modem vazifasi nima?",
+    "options": ["Operatsion tizimni ishga tushurish", "Grafik ma'lumotlarni qayta ishlash", "Ma'lumotlarni doimiy saqlash", "Raqamli signalni analogga aylantirib internetga ulanishni ta'minlaydi"],
+    "correct": 3,
+    "explanation": ""
+  },
+  {
+    "id": 56,
+    "question": "Operatsion tizimning asosiy vazifalaridan biri nima?",
+    "options": ["Resurslarni (CPU, xotira, disk, tarmoq) boshqarish", "Kompyuterni o'chirish", "Faqat xotirani boshqarish", "Faqat grafik interfeysni ko'rsatish"],
+    "correct": 0,
+    "explanation": ""
+  },
+  {
+    "id": 57,
+    "question": "Operatsion tizimlar turlariga misol keltiring.",
+    "options": ["Desktop (Windows, Linux, MacOS), Mobil (Android/iOS)", "Chrome, opera, linux", "Mozilla firefox, desktop, microsoft edge", "Android, yandex, korzinka"],
+    "correct": 0,
+    "explanation": ""
+  },
+  {
+    "id": 58,
+    "question": "Microsoft Word dasturi nima uchun ishlatiladi?",
+    "options": ["Animatsiya qilish", "Kod yozish", "Matnli hujjatlar yaratish va tahrirlash", "Video tahrirlash"],
+    "correct": 2,
+    "explanation": ""
+  },
+  {
+    "id": 59,
+    "question": "Wordda fayl kengaytmasi qanday?",
+    "options": [".html", ".doc va .docx", ".ppt va .pptx", ".xls va .xlsx"],
+    "correct": 1,
+    "explanation": ""
+  },
+  {
+    "id": 60,
+    "question": "Word dasturida yangi hujjat qanday yaratiladi?",
+    "options": ["File → New menyusidan", "Insert → new page", "Format → start", "Edit → create"],
+    "correct": 0,
+    "explanation": ""
+  },
+  {
+    "id": 61,
+    "question": "Ctrl + B tugmalari nima vazifa bajaradi?",
+    "options": ["Matnni qalin (bold) qiladi", "Matnni pastga suradi", "Matnni o'chiradi", "Matnni tagiga chizadi"],
+    "correct": 0,
+    "explanation": ""
+  },
+  {
+    "id": 62,
+    "question": "Wordda shrift (font) o'lchami qayerdan sozlanadi?",
+    "options": ["Home menyusidagi Font size qutisidan", "Insert → Shapes menyusida", "Insert → Table menyusidan", "Insert → Link yordamida"],
+    "correct": 0,
+    "explanation": ""
+  },
+  {
+    "id": 63,
+    "question": "Sahifa raqamini qanday qo'shish mumkin?",
+    "options": ["File → save as", "Insert → Page Number", "Design → page number", "Review → add page"],
+    "correct": 1,
+    "explanation": ""
+  },
+  {
+    "id": 64,
+    "question": "Ctrl + S tugmalari nima uchun ishlatiladi?",
+    "options": ["Hujjatni saqlash uchun", "Hujjatni chop etish uchun", "Hujjatni yopish uchun", "Yangi hujjat ochish uchun"],
+    "correct": 0,
+    "explanation": ""
+  },
+  {
+    "id": 65,
+    "question": "Wordda hujjatga rasmni qanday qo'shiladi?",
+    "options": ["Insert → Picture menyusidan", "Insert → Table menyusidan", "Home menyusida Numbering tugmasi bilan", "Home menyusidagi Font size qutisidan"],
+    "correct": 0,
+    "explanation": ""
+  },
+  {
+    "id": 66,
+    "question": "Ctrl + C va Ctrl + V nima vazifani bajaradi?",
+    "options": ["Nusxa olish va joylashtirish", "Matnni qalin qilish", "Jadval qo'shish", "Hujjatni yopish"],
+    "correct": 0,
+    "explanation": ""
+  },
+  {
+    "id": 67,
+    "question": "Word hujjatini qanday chop etiladi?",
+    "options": ["File → Print yoki Ctrl + P", "Insert → save", "Design → print", "Servis → out"],
+    "correct": 0,
+    "explanation": ""
+  },
+  {
+    "id": 68,
+    "question": "Wordda jadval (table) qanday qo'shiladi?",
+    "options": ["Insert → Table menyusidan", "Home menyusida Numbering tugmasi bilan", "Layout → Columns → Two tanlanadi", "Insert → Link yordamida"],
+    "correct": 0,
+    "explanation": ""
+  },
+  {
+    "id": 69,
+    "question": "Hujjatni qanday saqlash mumkin?",
+    "options": ["File → Save yoki Ctrl + S", "Ctrl + B", "Ctrl + P", "View → Zoom"],
+    "correct": 0,
+    "explanation": ""
+  },
+  {
+    "id": 70,
+    "question": "Qaysi menyuda 'Bold', 'Italic', 'Underline' opsiyalari mavjud?",
+    "options": ["Home menyusining Font guruhida", "Design menyusida", "Insert → Chart menyusida", "Insert → Text Box"],
+    "correct": 0,
+    "explanation": ""
+  },
+  {
+    "id": 71,
+    "question": "Ctrl + Z qanday vazifa bajaradi?",
+    "options": ["Oxirgi amalni bekor qilish (undo)", "Matnni qalin qilish", "Belgilangan matnni o'chirish", "Nusxa olish"],
+    "correct": 0,
+    "explanation": ""
+  },
+  {
+    "id": 72,
+    "question": "Qanday qilib hujjatni parol bilan himoyalash mumkin?",
+    "options": ["Word'da File → Protect Document → Encrypt with Password", "F5 tugmasi", "Word'da Insert → Page Number", "Insert → Text Box yordamida"],
+    "correct": 0,
+    "explanation": ""
+  },
+  {
+    "id": 73,
+    "question": "Excel dasturi asosan nima uchun ishlatiladi?",
+    "options": ["Jadval ko'rinishda ma'lumotni tahlil qilish va hisob-kitoblar uchun", "Video tahrirlash uchun", "Matn tahrirlash uchun", "Audio yozish uchun"],
+    "correct": 0,
+    "explanation": ""
+  },
+  {
+    "id": 74,
+    "question": "Excel fayllarining kengaytmasi nima?",
+    "options": [".pdf", ".docx va .doc", ".pptx va .ppt", ".xlsx va .xls"],
+    "correct": 3,
+    "explanation": ""
+  },
+  {
+    "id": 75,
+    "question": "Excelda formulani kiritish qanday belgidan boshlanadi?",
+    "options": ["= belgisi", "+ belgisi", "-- belgisi", "→ belgisi"],
+    "correct": 0,
+    "explanation": ""
+  },
+  {
+    "id": 76,
+    "question": "Qanday funksiyalar asosiy matematik hisob-kitoblar uchun ishlatiladi?",
+    "options": ["COPY, PASTE", "MACRO, RECORD", "SUM, AVERAGE, MIN, MAX", "HEADER, FOOTER"],
+    "correct": 2,
+    "explanation": ""
+  },
+  {
+    "id": 77,
+    "question": "Excelda ustunlar qanday belgilanadi?",
+    "options": ["A, B, C … formatda", "1, 2, 3 … formatda", "A1, A2, A3 … formatda", "A1, B2, C3"],
+    "correct": 0,
+    "explanation": ""
+  },
+  {
+    "id": 78,
+    "question": "Excelda jadvalni qanday saqlash mumkin?",
+    "options": ["Ctrl + S yoki Fayl → Saqlash menyusi orqali", "Ctrl + C yoki Fayl → Saqlash menyusi orqali", "Ctrl + C yoki Insert → Saqlash menyusi orqali", "Ctrl + W yoki Insert → Saqlash menyusi orqali"],
+    "correct": 0,
+    "explanation": ""
+  },
+  {
+    "id": 79,
+    "question": "Excelda Autosum tugmasi nima uchun kerak?",
+    "options": ["Tez yig'indi (SUM) funksiyasini ishlatish uchun", "Diagramma chizish uchun", "Jadval chegarasini o'zgartirish uchun", "Rang tanlash uchun"],
+    "correct": 0,
+    "explanation": ""
+  },
+  {
+    "id": 80,
+    "question": "Excelda katakdagi ma'lumotni nusxalash uchun qaysi tugmalar ishlatiladi?",
+    "options": ["Ctrl + C va Ctrl + V", "Shift + Enter", "Ctrl + B va Ctrl + U", "Alt + F4"],
+    "correct": 0,
+    "explanation": ""
+  },
+  {
+    "id": 81,
+    "question": "Excelda ma'lumotlarni filtrlash qayerda amalga oshiriladi?",
+    "options": ["Data → filter", "Help → filter", "Insert → chart", "View → filter"],
+    "correct": 0,
+    "explanation": ""
+  },
+  {
+    "id": 82,
+    "question": "Excelda ustun yoki qatorni yashirish qayerdan amalga oshiriladi?",
+    "options": ["Ustun nomi yoki qator raqamiga o'ng tugma bosib, 'Hide' ni tanlash", "Ustun nomi yoki qator raqamiga o'ng tugma bosib, 'view' ni tanlash", "Ustun nomi yoki qator raqamiga chap tugma bosib, 'Hide' ni tanlash", "Ustun nomi yoki qator raqamiga chap tugma bosib, 'view' ni tanlash"],
+    "correct": 0,
+    "explanation": ""
+  },
+  {
+    "id": 83,
+    "question": "PowerPoint dasturining asosiy vazifasi nima?",
+    "options": ["Slaydlar orqali kontentni taqdim etish va vizual tarzda ko'rsatish", "Jadval tuzish, formulalar yaratish", "Matn yozish va tahrir qilish", "Eslatmalar yozish va bajarish"],
+    "correct": 0,
+    "explanation": ""
+  },
+  {
+    "id": 84,
+    "question": "PowerPoint fayllarining kengaytmasi nima?",
+    "options": [".pdf", ".docx va .doc", ".ppt va .pptx", ".xlsx va .xls"],
+    "correct": 2,
+    "explanation": ""
+  },
+  {
+    "id": 85,
+    "question": "Slaydga matn qanday qo'shiladi?",
+    "options": ["Insert → Text Box", "Help → filter", "Insert → chart", "Word'da Insert → Page Number"],
+    "correct": 0,
+    "explanation": ""
+  },
+  {
+    "id": 86,
+    "question": "Qanday tugma yordamida taqdimotni ishga tushirish mumkin?",
+    "options": ["F5", "F4", "Ctrl + H", "Ctrl + P"],
+    "correct": 0,
+    "explanation": ""
+  },
+  {
+    "id": 87,
+    "question": "Qaysi menyuda slayd dizayni tanlanadi?",
+    "options": ["Design menyusida", "Home menyusida", "Insert menyusida", "Back menyusida"],
+    "correct": 0,
+    "explanation": ""
+  },
+  {
+    "id": 88,
+    "question": "PowerPointda rasmni slaydga qanday qo'shiladi?",
+    "options": ["Insert → Picture menyusidan", "Help → filter menyusidan", "Insert → chart menyusidan", "Home → image menyusidan"],
+    "correct": 0,
+    "explanation": ""
+  },
+  {
+    "id": 89,
+    "question": "Animatsiya nima uchun kerak?",
+    "options": ["Ovozli buyruq berish", "Slayddagi obyektlarni harakatlantirish va e'tiborni jalb qilish", "Rasm qo'shish", "Matn rangini o'zgartirish"],
+    "correct": 1,
+    "explanation": ""
+  },
+  {
+    "id": 90,
+    "question": "Internet nima?",
+    "options": ["Global kompyuter tarmog'i bo'lib, ma'lumot almashuv imkonini beradi", "Elektron qurilmani elektr bilan ta'minlaydigan qism", "Faqat lokal hududdagi qurilmalarni ulash tizimi", "Fayllarni zaxiralash tizimi"],
+    "correct": 0,
+    "explanation": ""
+  },
+  {
+    "id": 91,
+    "question": "Veb-brauzer vazifasi nima?",
+    "options": ["Internet sahifalarini yuklash, ko'rsatish va foydalanuvchi bilan o'zaro ishlash imkonini beradi", "Internetdagi veb-sahifalarni ko'rsatish va ularni boshqarish tizimi", "Internetdagi har bir resursning aniq manzilini ifodalovchi noyob matnli ko'rinish", "Kompyuterning qattiq diskidan vaqtincha xotira sifatida foydalanish texnologiyasi"],
+    "correct": 0,
+    "explanation": ""
+  },
+  {
+    "id": 92,
+    "question": "Google Drive qanday xizmat turi?",
+    "options": ["Diskni formatlaydi", "Ovozli aloqa tizimi", "Bulutli saqlash (online fayl saqlash va almashish xizmati)", "Video platforma"],
+    "correct": 2,
+    "explanation": ""
+  },
+  {
+    "id": 93,
+    "question": "YouTube qanday platforma?",
+    "options": ["Video ko'rish va ulashish platformasi", "Matnli hujjat platformasi", "Faqat rasm yuklash uchun", "Faoliyat monitoring platformasi"],
+    "correct": 0,
+    "explanation": ""
+  },
+  {
+    "id": 94,
+    "question": "Elektron pochta (email) nima uchun kerak?",
+    "options": ["Video qo'ng'iroq qilish uchun", "Matn yozish uchun", "Telefon raqamlarni saqlash uchun", "Xabar yuborish va olish uchun"],
+    "correct": 3,
+    "explanation": ""
+  },
+  {
+    "id": 95,
+    "question": "URL nima?",
+    "options": ["Elektron kitob formati", "Internet manzil ko'rsatuvchi satr", "Fayl format turi", "Tashqi qurilma"],
+    "correct": 1,
+    "explanation": ""
+  },
+  {
+    "id": 96,
+    "question": "Wi-Fi nima?",
+    "options": ["Simsiz internet ulanish texnologiyasi", "Protsessor", "Qattiq disk", "Printer bilan ulanadi"],
+    "correct": 0,
+    "explanation": ""
   }
-  
 ]
