@@ -13,7 +13,7 @@ async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
     keyboard = [
         [InlineKeyboardButton(
             "🏥 ARGOS Testini Boshlash",
-            web_app=WebAppInfo(url=f"{MINI_APP_URL}/index.html?user_id={user.id}")
+            web_app=WebAppInfo(url=f"{MINI_APP_URL}?user_id={user.id}")
         )]
     ]
     reply_markup = InlineKeyboardMarkup(keyboard)
