@@ -1,0 +1,17 @@
+[
+  {
+    "id": 1,
+    "question": "Normal arterial bosim normasi qaysi?",
+    "options": ["100/60 mmHg", "120/80 mmHg", "140/90 mmHg", "160/100 mmHg"],
+    "correct": 1,
+    "explanation": "Normal arterial bosim 120/80 mmHg hisoblanadi."
+  },
+  {
+    "id": 2,
+    "question": "Yurak urishi normasi (bir daqiqada)?",
+    "options": ["40-50", "60-100", "100-120", "120-140"],
+    "correct": 1,
+    "explanation": "Kattalar uchun normal yurak urishi 60-100 marta/daqiqa."
+  }
+  
+]
