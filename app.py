@@ -2,7 +2,7 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.staticfiles import StaticFiles
 from pydantic import BaseModel
-import sqlite3, json, random
+import sqlite3, json, random, os
 
 app = FastAPI()
 
@@ -13,13 +13,26 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-# Static fayllar (index.html)
 app.mount("/static", StaticFiles(directory="static"), name="static")
 
+DB = "/app/data/argos.db"
+
 # --- Ma'lumotlar bazasi ---
+def get_conn():
+    return sqlite3.connect(DB)
+
 def init_db():
-    conn = sqlite3.connect("argos.db")
+    conn = get_conn()
     c = conn.cursor()
+    c.execute("""
+        CREATE TABLE IF NOT EXISTS questions (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            question TEXT UNIQUE,
+            options TEXT,
+            correct INTEGER,
+            explanation TEXT DEFAULT ''
+        )
+    """)
     c.execute("""
         CREATE TABLE IF NOT EXISTS users (
             user_id INTEGER PRIMARY KEY,
@@ -37,88 +50,77 @@ def init_db():
         )
     """)
     conn.commit()
+
+    # questions.json mavjud bo'lsa, bazaga import qilish
+    if os.path.exists("questions.json"):
+        with open("questions.json", "r", encoding="utf-8") as f:
+            qs = json.load(f)
+        imported = 0
+        for q in qs:
+            try:
+                c.execute(
+                    "INSERT OR IGNORE INTO questions (question, options, correct, explanation) VALUES (?, ?, ?, ?)",
+                    (q["question"], json.dumps(q["options"], ensure_ascii=False), q["correct"], q.get("explanation", ""))
+                )
+                if c.rowcount > 0:
+                    imported += 1
+            except Exception:
+                pass
+        conn.commit()
+        if imported > 0:
+            print(f"✅ questions.json dan {imported} ta savol bazaga import qilindi")
     conn.close()
 
 init_db()
 
-# --- Savollarni yuklash ---
-def load_questions():
-    with open("questions.json", "r", encoding="utf-8") as f:
-        return json.load(f)
-
 # --- Modellar ---
 class UserRole(BaseModel):
     user_id: int
-    role: str  # "shifokor" yoki "hamshira"
+    role: str
 
 class Answer(BaseModel):
     user_id: int
     question_id: int
-    selected: int  # tanlangan variant indeksi
+    selected: int
 
 # --- Endpointlar ---
 
 @app.post("/api/register")
 def register(data: UserRole):
-    conn = sqlite3.connect("argos.db")
-    c = conn.cursor()
-    c.execute("INSERT OR REPLACE INTO users (user_id, role) VALUES (?, ?)", (data.user_id, data.role))
+    conn = get_conn()
+    conn.execute("INSERT OR REPLACE INTO users (user_id, role) VALUES (?, ?)", (data.user_id, data.role))
     conn.commit()
     conn.close()
     return {"status": "ok"}
 
 @app.get("/api/questions")
-def get_questions(user_id: int, count: int = 10):
-    questions = load_questions()
-    selected = random.sample(questions, min(count, len(questions)))
-    clean = []
-    for q in selected:
-        clean.append({
-            "id": q["id"],
-            "question": q["question"],
-            "options": q["options"],
-            "explanation": q.get("explanation", "")
-        })
-    return clean
-
-@app.post("/api/add_questions")
-def add_questions(new_questions: list[dict]):
-    """Yangi savollarni qo'shadi, dublikatlarni o'tkazib yuboradi"""
-    existing = load_questions()
-
-    # Mavjud savollar matnini set ga olish (tez qidirish uchun)
-    existing_texts = {q["question"].strip().lower() for q in existing}
-
-    added = 0
-    skipped = 0
-    next_id = max((q["id"] for q in existing), default=0) + 1
-
-    for q in new_questions:
-        text = q.get("question", "").strip().lower()
-        if not text or text in existing_texts:
-            skipped += 1
-            continue
-        q["id"] = next_id
-        existing.append(q)
-        existing_texts.add(text)
-        next_id += 1
-        added += 1
-
-    with open("questions.json", "w", encoding="utf-8") as f:
-        json.dump(existing, f, ensure_ascii=False, indent=2)
-
-    return {"added": added, "skipped": skipped, "total": len(existing)}
+def get_questions(user_id: int, bolim: str = "", count: int = 40):
+    conn = get_conn()
+    rows = conn.execute("SELECT id, question, options, explanation FROM questions").fetchall()
+    conn.close()
+    if not rows:
+        return []
+    selected = random.sample(rows, min(count, len(rows)))
+    return [
+        {
+            "id": r[0],
+            "question": r[1],
+            "options": json.loads(r[2]),
+            "explanation": r[3] or ""
+        }
+        for r in selected
+    ]
 
 @app.post("/api/answer")
 def submit_answer(data: Answer):
-    questions = load_questions()
-    q = next((x for x in questions if x["id"] == data.question_id), None)
-    if not q:
+    conn = get_conn()
+    row = conn.execute("SELECT correct, explanation FROM questions WHERE id=?", (data.question_id,)).fetchone()
+    if not row:
+        conn.close()
         return {"error": "Savol topilmadi"}
-    is_correct = data.selected == q["correct"]
-    conn = sqlite3.connect("argos.db")
-    c = conn.cursor()
-    c.execute(
+    correct_idx, explanation = row
+    is_correct = data.selected == correct_idx
+    conn.execute(
         "INSERT INTO results (user_id, question_id, is_correct) VALUES (?, ?, ?)",
         (data.user_id, data.question_id, is_correct)
     )
@@ -126,17 +128,16 @@ def submit_answer(data: Answer):
     conn.close()
     return {
         "is_correct": is_correct,
-        "correct_index": q["correct"],
-        "explanation": q.get("explanation", "")
+        "correct_index": correct_idx,
+        "explanation": explanation or ""
     }
 
 @app.get("/api/stats")
 def get_stats(user_id: int):
-    conn = sqlite3.connect("argos.db")
-    c = conn.cursor()
-    c.execute("SELECT COUNT(*), SUM(is_correct) FROM results WHERE user_id=?", (user_id,))
-    total, correct = c.fetchone()
+    conn = get_conn()
+    row = conn.execute("SELECT COUNT(*), SUM(is_correct) FROM results WHERE user_id=?", (user_id,)).fetchone()
     conn.close()
+    total, correct = row
     correct = correct or 0
     return {
         "total": total or 0,
@@ -147,15 +148,59 @@ def get_stats(user_id: int):
 
 @app.get("/api/mistakes")
 def get_mistakes(user_id: int):
-    questions = load_questions()
-    conn = sqlite3.connect("argos.db")
-    c = conn.cursor()
-    c.execute("""
-        SELECT question_id FROM results
-        WHERE user_id=? AND is_correct=0
-        GROUP BY question_id
-    """, (user_id,))
-    wrong_ids = [row[0] for row in c.fetchall()]
+    conn = get_conn()
+    wrong_ids = [r[0] for r in conn.execute(
+        "SELECT DISTINCT question_id FROM results WHERE user_id=? AND is_correct=0", (user_id,)
+    ).fetchall()]
+    if not wrong_ids:
+        conn.close()
+        return []
+    placeholders = ",".join("?" * len(wrong_ids))
+    rows = conn.execute(
+        f"SELECT id, question, options, correct, explanation FROM questions WHERE id IN ({placeholders})",
+        wrong_ids
+    ).fetchall()
     conn.close()
-    mistakes = [q for q in questions if q["id"] in wrong_ids]
-    return mistakes
+    return [
+        {
+            "id": r[0],
+            "question": r[1],
+            "options": json.loads(r[2]),
+            "correct": r[3],
+            "explanation": r[4] or ""
+        }
+        for r in rows
+    ]
+
+@app.post("/api/add_questions")
+async def add_questions(new_questions: list[dict]):
+    conn = get_conn()
+    added = 0
+    skipped = 0
+    for q in new_questions:
+        text = q.get("question", "").strip()
+        if not text:
+            skipped += 1
+            continue
+        try:
+            conn.execute(
+                "INSERT OR IGNORE INTO questions (question, options, correct, explanation) VALUES (?, ?, ?, ?)",
+                (text, json.dumps(q.get("options", []), ensure_ascii=False), q.get("correct", 0), q.get("explanation", ""))
+            )
+            if conn.total_changes > 0:
+                added += 1
+            else:
+                skipped += 1
+        except Exception:
+            skipped += 1
+    conn.commit()
+    total = conn.execute("SELECT COUNT(*) FROM questions").fetchone()[0]
+    conn.close()
+    return {"added": added, "skipped": skipped, "total": total}
+
+@app.get("/api/total_questions")
+def total_questions():
+    conn = get_conn()
+    total = conn.execute("SELECT COUNT(*) FROM questions").fetchone()[0]
+    conn.close()
+    return {"total": total}
