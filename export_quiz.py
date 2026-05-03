@@ -3,9 +3,13 @@ import json
 from telethon import TelegramClient
 from telethon.tl.types import MessageMediaPoll
 
+
 API_ID = 32599427          # my.telegram.org dan olingan
 API_HASH = "4c94a696dc744d619b19789b93ed4709"  # my.telegram.org dan olingan
 KANAL = -1001234567890     # private kanal ID (-100 bilan boshlanadi)
+
+# ↓↓↓ SHU YERGA RAILWAY URL INI QO'YING ↓↓↓
+API_URL = "https://argos-bot-production.up.railway.app"
 
 async def main():
     client = TelegramClient("session", API_ID, API_HASH)
@@ -23,23 +27,19 @@ async def main():
 
     print("Savollar o'qilmoqda...\n")
     questions = []
-    q_id = 1
 
     async for msg in client.iter_messages(entity, limit=5000):
-        # Faqat quiz (poll) xabarlarni olish
         if not msg.media or not isinstance(msg.media, MessageMediaPoll):
             continue
 
         poll = msg.media.poll
         results = msg.media.results
 
-        # Savol matni
         try:
             question_text = poll.question.text
         except AttributeError:
             question_text = str(poll.question)
 
-        # Variantlar
         options = []
         for ans in poll.answers:
             try:
@@ -47,7 +47,6 @@ async def main():
             except AttributeError:
                 options.append(str(ans.text))
 
-        # To'g'ri javob indeksi
         correct = 0
         if results and results.results:
             for i, r in enumerate(results.results):
@@ -56,26 +55,26 @@ async def main():
                     break
 
         questions.append({
-            "id": q_id,
             "question": question_text,
             "options": options,
             "correct": correct,
             "explanation": ""
         })
-
-        print(f"✅ {q_id}-savol: {question_text[:60]}...")
-        q_id += 1
+        print(f"✅ {len(questions)}-savol: {question_text[:60]}...")
 
     if not questions:
-        print("❌ Hech qanday quiz savoli topilmadi.")
+        print("❌ Hech qanday quiz topilmadi.")
         await client.disconnect()
         return
 
-    # questions.json ga saqlash
-    with open("questions.json", "w", encoding="utf-8") as f:
-        json.dump(questions, f, ensure_ascii=False, indent=2)
+    # API orqali yuborish (dublikat tekshiruvi bilan)
+    async with aiohttp.ClientSession() as session:
+        async with session.post(API_URL, json=questions) as resp:
+            result = await resp.json()
+            print(f"\n✅ Qo'shildi: {result['added']} ta")
+            print(f"⏭️  O'tkazib yuborildi (dublikat): {result['skipped']} ta")
+            print(f"📦 Jami savollar: {result['total']} ta")
 
-    print(f"\n🎉 Jami {len(questions)} ta savol saqlandi → questions.json")
     await client.disconnect()
 
 asyncio.run(main())

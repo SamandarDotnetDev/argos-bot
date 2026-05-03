@@ -2,3 +2,5 @@ fastapi
 uvicorn
 python-telegram-bot
 aiofiles
+aiohttp
+telethon

@@ -71,7 +71,6 @@ def register(data: UserRole):
 def get_questions(user_id: int, count: int = 10):
     questions = load_questions()
     selected = random.sample(questions, min(count, len(questions)))
-    # Javoblarni olib tashlaymiz
     clean = []
     for q in selected:
         clean.append({
@@ -81,6 +80,34 @@ def get_questions(user_id: int, count: int = 10):
             "explanation": q.get("explanation", "")
         })
     return clean
+
+@app.post("/api/add_questions")
+def add_questions(new_questions: list[dict]):
+    """Yangi savollarni qo'shadi, dublikatlarni o'tkazib yuboradi"""
+    existing = load_questions()
+
+    # Mavjud savollar matnini set ga olish (tez qidirish uchun)
+    existing_texts = {q["question"].strip().lower() for q in existing}
+
+    added = 0
+    skipped = 0
+    next_id = max((q["id"] for q in existing), default=0) + 1
+
+    for q in new_questions:
+        text = q.get("question", "").strip().lower()
+        if not text or text in existing_texts:
+            skipped += 1
+            continue
+        q["id"] = next_id
+        existing.append(q)
+        existing_texts.add(text)
+        next_id += 1
+        added += 1
+
+    with open("questions.json", "w", encoding="utf-8") as f:
+        json.dump(existing, f, ensure_ascii=False, indent=2)
+
+    return {"added": added, "skipped": skipped, "total": len(existing)}
 
 @app.post("/api/answer")
 def submit_answer(data: Answer):
