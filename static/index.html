@@ -312,19 +312,21 @@ function updateGrid(){
     const el=document.getElementById("qn"+i);if(!el)return;
     el.className="qn";
     if(i===curIdx)el.classList.add("active");
-    else if(answers[i]!==undefined)el.classList.add(answers[i].correct?"correct":"wrong");
+    else if(confirmed[i]!==undefined)el.classList.add(confirmed[i]?"correct":"wrong");
+    else if(answers[i]!==undefined)el.classList.add("answered");
   });
 }
 
 function renderQ(){
   const q=questions[curIdx];
   document.getElementById("q-lbl").textContent=`Savol № ${curIdx+1}`;
-  document.getElementById("q-cnt").textContent=`Javob berilgan: ${Object.keys(answers).length} / ${questions.length}`;
+  const answeredCount=Object.keys(confirmed).length;
+  document.getElementById("q-cnt").textContent=`Javob berilgan: ${answeredCount} / ${questions.length}`;
   document.getElementById("pg-ind").textContent=`${curIdx+1} / ${questions.length}`;
   document.getElementById("q-text").textContent=q.question;
   document.getElementById("exp-box").style.display="none";
 
-  const isAns=answers[curIdx]!==undefined;
+  const isConfirmed=confirmed[curIdx]!==undefined;
   const nb=document.getElementById("next-btn");
   nb.textContent=curIdx<questions.length-1?"Keyingi ›":"Tugatish";
   nb.className=curIdx<questions.length-1?"nbtn nbtn-next":"nbtn nbtn-finish";
@@ -333,31 +335,40 @@ function renderQ(){
   q.options.forEach((opt,i)=>{
     const btn=document.createElement("button");
     btn.className="opt";
-    if(isAns){
+    if(isConfirmed){
       btn.classList.add("disabled");
       if(i===q.correct)btn.classList.add("correct");
-      else if(i===answers[curIdx].selected&&!answers[curIdx].correct)btn.classList.add("wrong");
+      else if(i===answers[curIdx]&&i!==q.correct)btn.classList.add("wrong");
+    } else if(answers[curIdx]===i){
+      btn.classList.add("selected");
     }
     btn.innerHTML=`<span class="radio"></span>${opt}`;
-    btn.onclick=()=>submitAns(i);
+    btn.onclick=()=>selectAnswer(i);
     wrap.appendChild(btn);
   });
 
-  if(isAns&&q.explanation){
+  if(isConfirmed&&q.explanation){
     const eb=document.getElementById("exp-box");
     eb.textContent="💡 "+q.explanation;eb.style.display="block";
   }
   updateGrid();
 }
 
+function selectAnswer(sel){
+  if(confirmed[curIdx]!==undefined)return;
+  answers[curIdx]=sel;
+  renderQ();
+}
+
 function submitAns(sel){
-  if(answers[curIdx]!==undefined)return;
+  if(confirmed[curIdx]!==undefined)return;
   const q=questions[curIdx];
-  const ok=sel===q.correct;
-  answers[curIdx]={selected:sel,correct:ok};
+  answers[curIdx]=sel;
+  const isCorrect=sel===q.correct;
+  confirmed[curIdx]=isCorrect;
   fetch(`${API}/answer`,{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({user_id:UID,question_id:q.id,selected:sel})}).catch(()=>{});
   renderQ();
-  if(Object.keys(answers).length===questions.length){
+  if(Object.keys(confirmed).length===questions.length){
     setTimeout(()=>{if(confirm("Barcha savollarga javob berdingiz! Natijani ko'rasizmi?"))finish();},500);
   }
 }
@@ -373,7 +384,7 @@ function finish(){clearInterval(timerInt);showN();show("natija");}
 
 function showN(){
   const tot=questions.length;
-  const cor=Object.values(answers).filter(a=>a.correct).length;
+  const cor=Object.values(confirmed).filter(v=>v===true).length;
   const ball=(cor*0.5).toFixed(1);
   document.getElementById("n-jami").textContent=tot;
   document.getElementById("n-togri").textContent=cor;
