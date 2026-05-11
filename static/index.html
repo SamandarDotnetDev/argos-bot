@@ -155,9 +155,9 @@ body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;backgrou
         <div class="bolim-img bi-green">🩺</div>
         <div class="bolim-body"><div class="bolim-name">Shifokorlar</div><div class="bolim-desc">Shifokorlar bo'limi</div><div class="bolim-link">Boshlash ›</div></div>
       </div>
-      <div class="bolim-card" onclick="selBolim('hamshira','Hamshiralar')">
+      <div class="bolim-card" onclick="selBolim('hamshira','Hamshiralar')" style="opacity:.55">
         <div class="bolim-img bi-pink">🩷</div>
-        <div class="bolim-body"><div class="bolim-name">Hamshiralar</div><div class="bolim-desc">Hamshiralar bo'limi</div><div class="bolim-link">Boshlash ›</div></div>
+        <div class="bolim-body"><div class="bolim-name">Hamshiralar</div><div class="bolim-desc">Tez kunda...</div><div class="bolim-link">Hozircha mavjud emas</div></div>
       </div>
     </div>
   </div>
@@ -188,7 +188,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;backgrou
   </div>
   <div class="nav-btns">
     <button class="nbtn nbtn-prev" onclick="goQ(-1)">‹ Oldingi</button>
-    <span class="page-ind" id="pg-ind">1 / 40</span>
+    <span class="page-ind" id="pg-ind">1 / 50</span>
     <button class="nbtn nbtn-next" id="next-btn" onclick="goQ(1)">Keyingi ›</button>
   </div>
 </div>
@@ -267,7 +267,14 @@ function startTimer(){
   },1000);
 }
 
-function selBolim(key,name){bolimKey=key;bolimName=name;startTest();}
+function selBolim(key,name){
+  // Hozircha faqat shifokorlar bo'limi mavjud
+  if(key==='hamshira'){
+    alert("Hamshiralar bo'limi hozircha mavjud emas. Tez orada qo'shiladi.");
+    return;
+  }
+  bolimKey=key;bolimName=name;startTest();
+}
 function goTest(){if(!bolimKey){show("bolim");return;}show("test");}
 
 async function startTest(){
@@ -278,8 +285,9 @@ async function startTest(){
   document.getElementById("u-bolim").textContent=bolimName;
   document.getElementById("qg-label").textContent=bolimName;
   try{
-    const r=await fetch(`${API}/questions?user_id=${UID}&bolim=${bolimKey}&count=40`);
+    const r=await fetch(`${API}/questions?user_id=${UID}&bolim=${bolimKey}&count=50`);
     questions=await r.json();
+    if(!Array.isArray(questions)||questions.length===0)questions=demoQ();
   }catch(e){questions=demoQ();}
   buildGrid();renderQ();startTimer();show("test");
 }
@@ -292,7 +300,7 @@ function demoQ(){
     {id:4,question:"Qon guruhlarini kim kashf etgan?",options:["Pasteur","Fleming","Landsteiner","Koch"],correct:2,explanation:"Karl Landsteiner 1901-yilda qon guruhlarini kashf etgan."},
     {id:5,question:"Glyukoza normasi (mmol/L)?",options:["2.0-3.5","3.9-6.1","7.0-9.0","10.0-12.0"],correct:1,explanation:"Qondagi glyukoza normasi: 3.9-6.1 mmol/L."},
   ];
-  let q=[];for(let i=0;i<40;i++)q.push({...base[i%base.length],id:i+1});
+  let q=[];for(let i=0;i<50;i++)q.push({...base[i%base.length],id:i+1});
   return q;
 }
 
@@ -430,10 +438,11 @@ async function loadM(){
   const wrap=document.getElementById("m-list");
   wrap.innerHTML='<div class="empty">Yuklanmoqda...</div>';
   try{
-    const res=await fetch(`${API}/mistakes?user_id=${UID}`);
+    const bk=bolimKey||"shifokor";
+    const res=await fetch(`${API}/mistakes?user_id=${UID}&bolim=${bk}&count=50`);
     mistakeList=await res.json();
     wrap.innerHTML="";
-    if(mistakeList.length===0){
+    if(!Array.isArray(mistakeList)||mistakeList.length===0){
       wrap.innerHTML='<div class="empty">🎉 Xato yo\'q! Ajoyib natija!</div>';
       document.getElementById("retry-btn").style.display="none";
       return;
@@ -451,8 +460,17 @@ async function loadM(){
 }
 
 function retryMistakes(){
-  questions=mistakeList.map((q,i)=>({...q,id:i+1}));
-  answers={};curIdx=0;
+  // Xatolarni qayta yechishda ham 50 tadan ortiq chiqmasin
+  let pool=Array.isArray(mistakeList)?mistakeList.slice():[];
+  // Tasodifiy aralashtiramiz, 50 tagacha cheklaymiz
+  for(let i=pool.length-1;i>0;i--){
+    const j=Math.floor(Math.random()*(i+1));
+    [pool[i],pool[j]]=[pool[j],pool[i]];
+  }
+  if(pool.length>50)pool=pool.slice(0,50);
+  if(pool.length===0){alert("Qayta yechish uchun xato yo'q.");return;}
+  questions=pool.map((q,i)=>({...q,id:q.id||i+1}));
+  answers={};confirmed={};curIdx=0;
   buildGrid();renderQ();startTimer();show("test");
 }
 </script>
