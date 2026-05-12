@@ -21,8 +21,14 @@ app.add_middleware(
 DB = "/app/data/argos.db"
 
 ROLE_FILES = {
-    "shifokor": "1_modul_questions_doc.json",
-    # "hamshira": "1_modul_questions_doc_hamshira.json",  # hozircha bosh
+    # Format: "<role>_<modul>" -> JSON fayl
+    "shifokor_1": "1_modul_questions_doc.json",
+    # "shifokor_2": "2_modul_questions_doc.json",  # keyinroq
+    # "shifokor_3": "3_modul_questions_doc.json",  # keyinroq
+    # "shifokor_4": "4_modul_questions_doc.json",  # keyinroq
+    # "hamshira_2": "2_modul_questions_doc_hamshira.json",  # hozircha bosh
+    # "hamshira_3": "3_modul_questions_doc_hamshira.json",  # hozircha bosh
+    # "hamshira_4": "4_modul_questions_doc_hamshira.json",  # hozircha bosh
 }
 
 
@@ -72,6 +78,9 @@ def init_db():
     conn.commit()
 
     c.execute("DELETE FROM questions WHERE role IS NULL OR role = ''")
+    # Eski yozuvlar 'shifokor' deb saqlangan bo'lishi mumkin -> 'shifokor_1' ga ko'chiramiz
+    c.execute("UPDATE questions SET role = 'shifokor_1' WHERE role = 'shifokor'")
+    c.execute("UPDATE questions SET role = 'hamshira_2' WHERE role = 'hamshira'")
     conn.commit()
 
     for role, fname in ROLE_FILES.items():
@@ -136,14 +145,26 @@ class Answer(BaseModel):
 
 
 def _normalize_role(bolim: str) -> str:
+    """bo'lim/role argumentini standartlashtirish.
+    Qabul qiladi: 'shifokor_1', 'shifokor', 'doctor_1', 'hamshira_2', 'nurse_3' va h.k.
+    Qaytaradi: '<role>_<modul>' (default '<role>_1') yoki shunchaki role.
+    """
     if not bolim:
-        return "shifokor"
+        return "shifokor_1"
     b = bolim.strip().lower()
-    if b in ("shifokor", "shifokorlar", "doctor", "doctors"):
-        return "shifokor"
-    if b in ("hamshira", "hamshiralar", "nurse", "nurses"):
-        return "hamshira"
-    return b
+    # Modul raqamini ajratish: "shifokor_1" -> ("shifokor", "1")
+    parts = b.replace("-", "_").split("_")
+    base = parts[0]
+    modul = parts[1] if len(parts) > 1 and parts[1].isdigit() else None
+    # Rolni tarjima qilish
+    if base in ("shifokor", "shifokorlar", "doctor", "doctors"):
+        base = "shifokor"
+    elif base in ("hamshira", "hamshiralar", "nurse", "nurses"):
+        base = "hamshira"
+    if modul:
+        return f"{base}_{modul}"
+    # Default: shifokor uchun 1-modul, hamshira uchun 2-modul
+    return f"{base}_1" if base == "shifokor" else f"{base}_2"
 
 
 @app.post("/api/register")
@@ -159,7 +180,7 @@ def register(data: UserRole):
 
 
 @app.get("/api/questions")
-def get_questions(user_id: int, bolim: str = "shifokor", count: int = 50):
+def get_questions(user_id: int, bolim: str = "shifokor_1", count: int = 50):
     role = _normalize_role(bolim)
     if count < 1:
         count = 50
@@ -229,7 +250,7 @@ def get_stats(user_id: int):
 
 
 @app.get("/api/mistakes")
-def get_mistakes(user_id: int, bolim: str = "shifokor", count: int = 50):
+def get_mistakes(user_id: int, bolim: str = "shifokor_1", count: int = 50):
     role = _normalize_role(bolim)
     if count < 1:
         count = 50

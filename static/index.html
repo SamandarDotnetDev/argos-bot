@@ -64,37 +64,55 @@ body{
 .screen.active{display:flex}
 .scroll{flex:1;overflow-y:auto;-webkit-overflow-scrolling:touch;padding:16px 14px 18px}
 
-/* BO'LIMLAR */
-.bolim-title{text-align:center;font-size:22px;font-weight:800;margin-bottom:6px;padding-top:8px;letter-spacing:-.3px}
-.bolim-sub{text-align:center;color:var(--muted);font-size:13px;margin-bottom:20px}
-.bolim-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}
-.bolim-card{
+/* ROLE TANLASH (ilovaga birinchi marta kirgan vaqt) */
+.role-wrap{padding:20px 18px;display:flex;flex-direction:column;align-items:center;justify-content:center;flex:1}
+.role-emoji{font-size:62px;margin-bottom:10px}
+.role-title{font-size:22px;font-weight:800;text-align:center;margin-bottom:6px;letter-spacing:-.4px}
+.role-sub{text-align:center;color:var(--muted);font-size:13px;margin-bottom:22px;max-width:320px;line-height:1.55}
+.role-cards{display:grid;grid-template-columns:1fr 1fr;gap:14px;width:100%;max-width:420px}
+.role-card{
   background:var(--card);border-radius:var(--radius-lg);overflow:hidden;cursor:pointer;
   border:1px solid var(--border);box-shadow:var(--shadow);
-  transition:transform .2s ease,box-shadow .2s ease;
+  transition:transform .2s,box-shadow .2s;
 }
-.bolim-card:active{transform:scale(.97)}
-.bolim-card:hover{box-shadow:var(--shadow-lg);transform:translateY(-2px)}
-.bolim-img{height:110px;display:flex;align-items:center;justify-content:center;font-size:46px;color:#fff;position:relative}
-.bolim-img::after{content:"";position:absolute;inset:0;background:radial-gradient(circle at 30% 30%,rgba(255,255,255,.25),transparent 60%);pointer-events:none}
-.bi-purple{background:linear-gradient(135deg,#a855f7,#7c3aed)}
-.bi-blue{background:linear-gradient(135deg,#3b82f6,#2563eb)}
-.bi-green{background:linear-gradient(135deg,#22c55e,#16a34a)}
-.bi-pink{background:linear-gradient(135deg,#f472b6,#db2777)}
-.bolim-body{padding:12px 14px 14px}
-.bolim-name{font-size:14px;font-weight:800;margin-bottom:3px}
-.bolim-desc{font-size:11px;color:var(--muted);margin-bottom:8px}
-.bolim-link{color:var(--primary);font-size:11px;font-weight:700;display:flex;align-items:center;gap:3px}
-.bolim-card.disabled{opacity:.55;cursor:not-allowed}
-.bolim-card.disabled .bolim-link{color:var(--muted)}
+.role-card:active{transform:scale(.97)}
+.role-card:hover{box-shadow:var(--shadow-lg);transform:translateY(-2px)}
+.role-card .ri{height:120px;display:flex;align-items:center;justify-content:center;font-size:50px;color:#fff;position:relative}
+.role-card .ri::after{content:"";position:absolute;inset:0;background:radial-gradient(circle at 30% 30%,rgba(255,255,255,.25),transparent 60%);pointer-events:none}
+.role-card .rb{padding:14px 14px 16px;text-align:center}
+.role-card .rname{font-size:15px;font-weight:800;margin-bottom:3px}
+.role-card .rdesc{font-size:11px;color:var(--muted);line-height:1.5}
 
-.welcome-card{
-  background:linear-gradient(135deg,#4f46e5,#7c3aed);
-  color:#fff;border-radius:var(--radius-lg);padding:16px 18px;margin-bottom:18px;
-  box-shadow:var(--shadow-lg);
+/* MODUL TANLASH */
+.modul-head{padding:8px 0 14px}
+.modul-back{display:inline-flex;align-items:center;gap:5px;background:var(--primary-soft);color:var(--primary);font-size:11px;font-weight:800;padding:6px 11px;border-radius:8px;cursor:pointer;border:none;margin-bottom:10px}
+.modul-back:active{transform:scale(.96)}
+.modul-title{font-size:20px;font-weight:800;letter-spacing:-.3px}
+.modul-sub{color:var(--muted);font-size:12px;margin-top:3px}
+.modul-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.modul-card{
+  background:var(--card);border-radius:var(--radius-lg);overflow:hidden;cursor:pointer;
+  border:1px solid var(--border);box-shadow:var(--shadow);
+  transition:transform .2s,box-shadow .2s;position:relative;
 }
-.welcome-card .wc-title{font-size:16px;font-weight:800;margin-bottom:4px}
-.welcome-card .wc-sub{font-size:12px;opacity:.9;line-height:1.5}
+.modul-card:active{transform:scale(.97)}
+.modul-card:hover:not(.disabled){box-shadow:var(--shadow-lg);transform:translateY(-2px)}
+.modul-card.disabled{opacity:.6;cursor:not-allowed}
+.modul-card .mi{
+  height:88px;display:flex;align-items:center;justify-content:center;
+  font-size:34px;font-weight:800;color:#fff;letter-spacing:-1px;position:relative;
+}
+.modul-card .mi::after{content:"";position:absolute;inset:0;background:radial-gradient(circle at 30% 30%,rgba(255,255,255,.25),transparent 60%);pointer-events:none}
+.mi-1{background:linear-gradient(135deg,#4f46e5,#7c3aed)}
+.mi-2{background:linear-gradient(135deg,#0ea5e9,#2563eb)}
+.mi-3{background:linear-gradient(135deg,#f97316,#ea580c)}
+.mi-4{background:linear-gradient(135deg,#10b981,#16a34a)}
+.modul-card .mb{padding:11px 12px 13px}
+.modul-card .mname{font-size:13px;font-weight:800;margin-bottom:2px}
+.modul-card .mdesc{font-size:11px;color:var(--muted)}
+.soon-tag{position:absolute;top:8px;right:8px;background:rgba(0,0,0,.55);color:#fff;font-size:9px;font-weight:800;padding:3px 7px;border-radius:6px;letter-spacing:.3px}
+.live-tag{position:absolute;top:8px;right:8px;background:#22c55e;color:#fff;font-size:9px;font-weight:800;padding:3px 7px;border-radius:6px;letter-spacing:.3px;animation:pulse 2s ease-in-out infinite}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.6}}
 
 /* USER BAR */
 .user-bar{background:var(--card);border-bottom:1px solid var(--border);padding:10px 14px;display:flex;align-items:center;gap:12px;flex-shrink:0}
@@ -108,6 +126,7 @@ body{
 .u-meta{font-size:10px;color:var(--muted);margin-top:1px}
 .u-meta span{font-weight:700;color:var(--text)}
 .bolim-tag{margin-left:auto;background:var(--primary-soft);border-radius:8px;padding:5px 10px;font-size:11px;font-weight:800;color:var(--primary)}
+.change-role{margin-left:auto;background:transparent;border:1px solid var(--border);color:var(--muted);font-size:11px;padding:5px 9px;border-radius:8px;cursor:pointer;font-weight:600}
 
 /* Q GRID */
 .q-grid-wrap{background:var(--card);border-bottom:1px solid var(--border);padding:11px 14px;flex-shrink:0}
@@ -167,7 +186,7 @@ body{
 .nbtn-prev:active{background:#e2e8f0}
 .nbtn-next{background:linear-gradient(135deg,var(--primary),var(--primary-2));color:#fff;min-width:90px;box-shadow:0 4px 12px rgba(79,70,229,.3)}
 .nbtn-finish{background:linear-gradient(135deg,#10b981,#16a34a);color:#fff;flex:1;box-shadow:0 4px 12px rgba(22,163,74,.3)}
-.page-ind{font-size:13px;font-weight:800;color:var(--text);background:var(--primary-soft);padding:6px 10px;border-radius:8px;color:var(--primary);min-width:70px;text-align:center}
+.page-ind{font-size:13px;font-weight:800;color:var(--primary);background:var(--primary-soft);padding:6px 10px;border-radius:8px;min-width:70px;text-align:center}
 
 /* NATIJA */
 .stat-row-cards{display:grid;grid-template-columns:1fr 1fr;gap:11px;margin-bottom:16px}
@@ -225,12 +244,12 @@ body{
 }
 .bnav{
   flex:1;padding:9px 0 11px;display:flex;flex-direction:column;align-items:center;gap:3px;
-  border:none;background:none;font-size:10px;color:#94a3b8;cursor:pointer;font-weight:700;
+  border:none;background:none;font-size:11px;color:#94a3b8;cursor:pointer;font-weight:700;
   transition:color .15s;
 }
 .bnav.active{color:var(--primary)}
 .bnav.active .bnav-icon{transform:scale(1.1)}
-.bnav-icon{font-size:20px;line-height:1;transition:transform .2s}
+.bnav-icon{font-size:22px;line-height:1;transition:transform .2s}
 
 .sec-title{font-size:18px;font-weight:800;margin-bottom:14px;letter-spacing:-.3px;display:flex;align-items:center;gap:8px}
 .sec-title .badge{background:var(--danger-soft);color:var(--danger);font-size:12px;padding:3px 9px;border-radius:8px;font-weight:800}
@@ -263,43 +282,51 @@ body{
   </div>
 </div>
 
-<!-- BO'LIMLAR -->
-<div id="sc-bolim" class="screen active">
-  <div class="scroll">
-    <div class="welcome-card">
-      <div class="wc-title">👋 Assalomu alaykum!</div>
-      <div class="wc-sub">ARGOS testiga tayyorgarlik platformasi. Quyidagi bo'limlardan o'zingiznikini tanlang va testni boshlang.</div>
-    </div>
-    <div class="bolim-title">Bo'limlarni tanlang</div>
-    <div class="bolim-sub">Quyidagi bo'limlardan birini tanlang</div>
-    <div class="bolim-grid">
-      <div class="bolim-card" onclick="selBolim('shifokor','Shifokorlar')">
-        <div class="bolim-img bi-green">🩺</div>
-        <div class="bolim-body">
-          <div class="bolim-name">Shifokorlar</div>
-          <div class="bolim-desc">Shifokorlar bo'limi · 1-modul</div>
-          <div class="bolim-link">Boshlash <span>›</span></div>
-        </div>
+<!-- ROLE TANLASH (FIRST RUN) -->
+<div id="sc-role" class="screen active">
+  <div class="role-wrap">
+    <div class="role-emoji">👨‍⚕️🧑‍⚕️</div>
+    <div class="role-title">Kim sifatida ro'yxatdan o'tasiz?</div>
+    <div class="role-sub">Iltimos, kasbingizni tanlang. Tanlovingiz keyingi kirishlarda saqlanib qoladi.</div>
+    <div class="role-cards">
+      <div class="role-card" onclick="pickRole('shifokor')">
+        <div class="ri bi-green" style="background:linear-gradient(135deg,#22c55e,#16a34a)">🩺</div>
+        <div class="rb"><div class="rname">Shifokor</div><div class="rdesc">Shifokorlar uchun<br>4 ta modul</div></div>
       </div>
-      <div class="bolim-card disabled" onclick="selBolim('hamshira','Hamshiralar')">
-        <div class="bolim-img bi-pink">🩷</div>
-        <div class="bolim-body">
-          <div class="bolim-name">Hamshiralar</div>
-          <div class="bolim-desc">Tez kunda...</div>
-          <div class="bolim-link">Hozircha mavjud emas</div>
-        </div>
+      <div class="role-card" onclick="pickRole('hamshira')">
+        <div class="ri bi-pink" style="background:linear-gradient(135deg,#f472b6,#db2777)">🩷</div>
+        <div class="rb"><div class="rname">Hamshira</div><div class="rdesc">Hamshiralar uchun<br>3 ta modul</div></div>
       </div>
     </div>
   </div>
 </div>
 
-<!-- TEST -->
-<div id="sc-test" class="screen" style="flex-direction:column">
+<!-- MODUL TANLASH (Test bo'limi) -->
+<div id="sc-test" class="screen">
   <div class="user-bar">
     <div class="u-avatar" id="u-av">U</div>
     <div>
       <div class="u-name" id="u-name">FOYDALANUVCHI</div>
       <div class="u-meta">ID: <span id="u-id">—</span></div>
+    </div>
+    <button class="change-role" onclick="changeRole()">↺ Rolni o'zgartirish</button>
+  </div>
+  <div class="scroll">
+    <div class="modul-head">
+      <div class="modul-title" id="m-title">Modulni tanlang</div>
+      <div class="modul-sub" id="m-sub">Quyidagi modullardan birini tanlang</div>
+    </div>
+    <div class="modul-grid" id="modul-grid"></div>
+  </div>
+</div>
+
+<!-- TEST (Savollar) -->
+<div id="sc-quiz" class="screen" style="flex-direction:column">
+  <div class="user-bar">
+    <div class="u-avatar" id="u-av2">U</div>
+    <div>
+      <div class="u-name" id="u-name2">FOYDALANUVCHI</div>
+      <div class="u-meta">ID: <span id="u-id2">—</span></div>
     </div>
     <div class="bolim-tag" id="u-bolim">—</div>
   </div>
@@ -350,7 +377,7 @@ body{
       </div>
     </div>
     <div class="n-table">
-      <div class="n-thead"><div>FANLAR NOMI</div><div>SAVOLLAR</div><div>TO'G'RI</div><div>BALL</div></div>
+      <div class="n-thead"><div>MODUL</div><div>SAVOLLAR</div><div>TO'G'RI</div><div>BALL</div></div>
       <div class="n-trow"><div id="n-fan">—</div><div id="n-s">0</div><div class="orn" id="n-t">0</div><div id="n-b">0</div></div>
       <div class="n-trow total"><div>Jami</div><div id="n-js">0</div><div id="n-jt">0</div><div id="n-jb">0</div></div>
     </div>
@@ -367,10 +394,9 @@ body{
   </div>
 </div>
 
-<!-- BOTTOM NAV -->
-<nav class="bot-nav">
-  <button class="bnav active" id="bn-bolim" onclick="show('bolim')"><span class="bnav-icon">🏠</span>Bosh</button>
-  <button class="bnav" id="bn-test" onclick="goTest()"><span class="bnav-icon">📝</span>Test</button>
+<!-- BOTTOM NAV (3 tugma) -->
+<nav class="bot-nav" id="bot-nav" style="display:none">
+  <button class="bnav active" id="bn-test" onclick="goTest()"><span class="bnav-icon">📝</span>Test</button>
   <button class="bnav" id="bn-natija" onclick="show('natija');showN()"><span class="bnav-icon">📊</span>Natija</button>
   <button class="bnav" id="bn-xatolar" onclick="show('xatolar');loadM()"><span class="bnav-icon">❌</span>Xatolar</button>
 </nav>
@@ -384,7 +410,21 @@ const UID=tg?.initDataUnsafe?.user?.id||99999;
 const UNAME=tg?.initDataUnsafe?.user?.first_name||"Foydalanuvchi";
 
 const TEST_COUNT=50;
-let questions=[],curIdx=0,answers={},bolimKey="",bolimName="",timerSec=3600,timerInt=null,mistakeList=[],confirmed={};
+const LS_ROLE="argos_role"; // "shifokor" | "hamshira"
+
+// Qaysi modullarda savol mavjudligi (UIda yashil "LIVE" yorlig'i uchun)
+const ACTIVE_MODULES = {
+  shifokor:[1],          // hozircha faqat 1-modul ishlaydi
+  hamshira:[]            // hozircha hech qaysi modul ishlamaydi
+};
+// Roleni ko'rsatadigan modul ro'yxati
+const MODULES_BY_ROLE = {
+  shifokor:[1,2,3,4],    // shifokor: 4 modul
+  hamshira:[2,3,4]       // hamshira: 2,3,4 modullar
+};
+
+let role="",bolimKey="",bolimName="";
+let questions=[],curIdx=0,answers={},timerSec=3600,timerInt=null,mistakeList=[],confirmed={};
 
 function show(name){
   document.querySelectorAll(".screen").forEach(s=>s.classList.remove("active"));
@@ -392,6 +432,10 @@ function show(name){
   document.getElementById("sc-"+name).classList.add("active");
   const nb=document.getElementById("bn-"+name);
   if(nb)nb.classList.add("active");
+  // Role tanlash sahifasida pastki nav yashirin bo'ladi
+  document.getElementById("bot-nav").style.display = (name==="role") ? "none" : "flex";
+  // Quiz screen uchun yuqori timer ko'rinadi
+  if(name!=="quiz") document.getElementById("timer").style.display="none";
 }
 
 function startTimer(){
@@ -407,38 +451,90 @@ function startTimer(){
   },1000);
 }
 
-function selBolim(key,name){
-  if(key==='hamshira'){
-    alert("Hamshiralar bo'limi hozircha mavjud emas. Tez orada qo'shiladi.");
+// --- ROLE BOSHQARUVI ---
+function pickRole(r){
+  role=r;
+  try{localStorage.setItem(LS_ROLE,r);}catch(e){}
+  // Server tomonida foydalanuvchi rolini ham saqlaymiz
+  fetch(`${API}/register`,{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({user_id:UID,role:r})}).catch(()=>{});
+  renderUserBars();
+  buildModulGrid();
+  show("test");
+}
+
+function changeRole(){
+  if(!confirm("Rolingizni o'zgartirmoqchimisiz?")) return;
+  try{localStorage.removeItem(LS_ROLE);}catch(e){}
+  role="";bolimKey="";bolimName="";
+  show("role");
+}
+
+function renderUserBars(){
+  const first=(UNAME[0]||"U").toUpperCase();
+  ["u-av","u-av2"].forEach(id=>{const e=document.getElementById(id);if(e)e.textContent=first;});
+  ["u-name","u-name2"].forEach(id=>{const e=document.getElementById(id);if(e)e.textContent=UNAME.toUpperCase();});
+  ["u-id","u-id2"].forEach(id=>{const e=document.getElementById(id);if(e)e.textContent=UID;});
+}
+
+function buildModulGrid(){
+  const g=document.getElementById("modul-grid");
+  g.innerHTML="";
+  const roleTitle = role==="shifokor" ? "Shifokorlar bo'limi" : "Hamshiralar bo'limi";
+  document.getElementById("m-title").textContent=roleTitle;
+  const mods=MODULES_BY_ROLE[role]||[];
+  const active=ACTIVE_MODULES[role]||[];
+  document.getElementById("m-sub").textContent=
+    active.length===0
+      ? "Bu bo'lim savollari hozircha qo'shilmagan. Tez orada to'ldiriladi."
+      : `Mavjud: ${active.length} ta modul. Quyidagidan birini tanlang.`;
+  mods.forEach(m=>{
+    const isActive=active.includes(m);
+    const colorClass=`mi-${m}`;
+    const card=document.createElement("div");
+    card.className="modul-card"+(isActive?"":" disabled");
+    card.innerHTML=`
+      <div class="mi ${colorClass}">${m}</div>
+      ${isActive?'<span class="live-tag">LIVE</span>':'<span class="soon-tag">TEZ KUNDA</span>'}
+      <div class="mb">
+        <div class="mname">${m}-modul</div>
+        <div class="mdesc">${isActive?"Test mavjud":"Hozircha mavjud emas"}</div>
+      </div>`;
+    card.onclick=()=>selModul(m,isActive);
+    g.appendChild(card);
+  });
+}
+
+function selModul(m,isActive){
+  if(!isActive){
+    alert(`${m}-modul savollari hozircha qo'shilmagan. Tez orada qo'shiladi.`);
     return;
   }
-  bolimKey=key;bolimName=name;startTest();
+  bolimKey=`${role}_${m}`;
+  bolimName=`${role==='shifokor'?'Shifokor':'Hamshira'} · ${m}-modul`;
+  startTest();
 }
-function goTest(){if(!bolimKey){show("bolim");return;}show("test");}
+
+function goTest(){
+  if(!role){show("role");return;}
+  show("test");
+  buildModulGrid();
+}
 
 async function startTest(){
   answers={};confirmed={};curIdx=0;
-  document.getElementById("u-av").textContent=UNAME[0]?.toUpperCase()||"U";
-  document.getElementById("u-name").textContent=UNAME.toUpperCase();
-  document.getElementById("u-id").textContent=UID;
   document.getElementById("u-bolim").textContent=bolimName;
   document.getElementById("qg-label").textContent=bolimName;
-  // Loading state
   document.getElementById("q-text").innerHTML='<div class="loading"><div class="spinner"></div>Savollar yuklanmoqda...</div>';
   document.getElementById("opts").innerHTML="";
-  show("test");
+  show("quiz");
   try{
     const r=await fetch(`${API}/questions?user_id=${UID}&bolim=${bolimKey}&count=${TEST_COUNT}`);
     questions=await r.json();
     if(!Array.isArray(questions)||questions.length===0)questions=demoQ();
   }catch(e){questions=demoQ();}
-  // Doim 50 ta savol ko'rsatamiz (kam bo'lsa, qaytadan to'ldiramiz)
   if(questions.length<TEST_COUNT && questions.length>0){
     const orig=questions.slice();let i=0;
-    while(questions.length<TEST_COUNT){
-      questions.push({...orig[i%orig.length],id:1000+questions.length});
-      i++;
-    }
+    while(questions.length<TEST_COUNT){questions.push({...orig[i%orig.length],id:1000+questions.length});i++;}
   }
   if(questions.length>TEST_COUNT)questions=questions.slice(0,TEST_COUNT);
   buildGrid();renderQ();startTimer();
@@ -483,7 +579,6 @@ function updateGrid(){
 function renderQ(){
   const q=questions[curIdx];
   if(!q)return;
-  // Re-trigger animation
   const card=document.getElementById("q-card");
   card.style.animation='none';void card.offsetWidth;card.style.animation='';
   document.getElementById("q-lbl").textContent=`Savol № ${curIdx+1}`;
@@ -527,17 +622,12 @@ function selectAnswer(sel){
   answers[curIdx]=sel;
   confirmAnswer(curIdx);
   updateGrid();
-  // Show explanation briefly before moving on
   renderQ();
   setTimeout(()=>{
     const nx=curIdx+1;
-    if(nx<questions.length){
-      curIdx=nx;renderQ();
-      document.getElementById("q-area").scrollTop=0;
-    } else {
-      finish();
-    }
-  }, 700);
+    if(nx<questions.length){curIdx=nx;renderQ();document.getElementById("q-area").scrollTop=0;}
+    else{finish();}
+  },700);
 }
 
 function confirmAnswer(idx){
@@ -579,18 +669,19 @@ async function showN(){
     document.getElementById("n-js").textContent=tot;
     document.getElementById("n-jt").textContent=cor;
     document.getElementById("n-jb").textContent=ball;
-  }catch(e){
-    console.error("Stats xatosi:",e);
-  }
+  }catch(e){console.error("Stats xatosi:",e);}
 }
 
-function qayta(){startTest();}
+function qayta(){
+  if(!bolimKey){goTest();return;}
+  startTest();
+}
 
 async function loadM(){
   const wrap=document.getElementById("m-list");
   wrap.innerHTML='<div class="loading"><div class="spinner"></div>Yuklanmoqda...</div>';
   try{
-    const bk=bolimKey||"shifokor";
+    const bk=bolimKey||(role?`${role}_1`:"shifokor_1");
     const res=await fetch(`${API}/mistakes?user_id=${UID}&bolim=${bk}&count=50`);
     mistakeList=await res.json();
     wrap.innerHTML="";
@@ -610,23 +701,36 @@ async function loadM(){
       d.innerHTML=`<div class="m-q"><b style="color:#dc2626">${i+1}.</b> ${q.question}</div><div class="m-ans">✅ To'g'ri: ${q.options[q.correct]}</div>`;
       wrap.appendChild(d);
     });
-  }catch(e){
-    wrap.innerHTML='<div class="empty"><span class="em-ico">⚠️</span>Xatolarni yuklashda muammo</div>';
-  }
+  }catch(e){wrap.innerHTML='<div class="empty"><span class="em-ico">⚠️</span>Xatolarni yuklashda muammo</div>';}
 }
 
 function retryMistakes(){
   let pool=Array.isArray(mistakeList)?mistakeList.slice():[];
-  for(let i=pool.length-1;i>0;i--){
-    const j=Math.floor(Math.random()*(i+1));
-    [pool[i],pool[j]]=[pool[j],pool[i]];
-  }
+  for(let i=pool.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[pool[i],pool[j]]=[pool[j],pool[i]];}
   if(pool.length>TEST_COUNT)pool=pool.slice(0,TEST_COUNT);
   if(pool.length===0){alert("Qayta yechish uchun xato yo'q.");return;}
+  if(!bolimKey)bolimKey=role?`${role}_1`:"shifokor_1";
+  if(!bolimName)bolimName=role?`${role==='shifokor'?'Shifokor':'Hamshira'} · Xatolar`:"Xatolar";
   questions=pool.map((q,i)=>({...q,id:q.id||i+1}));
   answers={};confirmed={};curIdx=0;
-  buildGrid();renderQ();startTimer();show("test");
+  document.getElementById("u-bolim").textContent=bolimName;
+  document.getElementById("qg-label").textContent=bolimName;
+  buildGrid();renderQ();startTimer();show("quiz");
 }
+
+// --- INIT ---
+(function init(){
+  let saved="";
+  try{saved=localStorage.getItem(LS_ROLE)||"";}catch(e){}
+  renderUserBars();
+  if(saved && (saved==="shifokor"||saved==="hamshira")){
+    role=saved;
+    buildModulGrid();
+    show("test");
+  } else {
+    show("role");
+  }
+})();
 </script>
 </body>
 </html>
