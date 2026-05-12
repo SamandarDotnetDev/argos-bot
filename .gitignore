@@ -1,0 +1,69 @@
+# ============================================================
+# MAXFIY MA'LUMOTLAR (hech qachon git'ga yuklanmasin!)
+# ============================================================
+.env
+.env.local
+.env.*.local
+*.env
+
+# Telethon session fayllari (akkauntga bog'langan maxfiy ma'lumot)
+*.session
+*.session-journal
+
+# ============================================================
+# Python
+# ============================================================
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+MANIFEST
+
+# Virtual environments
+venv/
+env/
+ENV/
+.venv/
+
+# ============================================================
+# Ma'lumotlar bazasi (lokalda yaratilgan SQLite fayllar)
+# ============================================================
+*.db
+*.sqlite
+*.sqlite3
+argos.db
+
+# ============================================================
+# IDE / Editor
+# ============================================================
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.DS_Store
+Thumbs.db
+
+# ============================================================
+# Loglar va vaqtinchalik fayllar
+# ============================================================
+*.log
+logs/
+tmp/
+temp/

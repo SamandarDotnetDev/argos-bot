@@ -1,12 +1,26 @@
 import logging
+import os
 from telegram import Update, WebAppInfo, InlineKeyboardButton, InlineKeyboardMarkup
 from telegram.ext import Application, CommandHandler, ContextTypes
 
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
-BOT_TOKEN = "8772060197:AAEINRgmN5dtrR42hHq1yLDyrs-jdz0M4BM"
-MINI_APP_URL = "https://argos-bot-production.up.railway.app/static/index.html"
+# === Maxfiy ma'lumotlar — Railway environment variables orqali yuklanadi ===
+# Railway dashboardidagi "Variables" bo'limidan sozlanadi.
+# Lokalda sinash uchun .env faylidan (gitignore'ga qo'shilgan) yuklash mumkin.
+BOT_TOKEN = os.environ.get("BOT_TOKEN", "").strip()
+MINI_APP_URL = os.environ.get(
+    "MINI_APP_URL",
+    "https://argos-bot-production.up.railway.app/static/index.html",
+).strip()
+
+if not BOT_TOKEN:
+    raise RuntimeError(
+        "BOT_TOKEN environment variable o'rnatilmagan. "
+        "Railway > Variables bo'limida BOT_TOKEN ni qo'shing."
+    )
+
 
 async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
     user = update.effective_user
@@ -26,6 +40,7 @@ async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
         parse_mode="Markdown"
     )
 
+
 async def help_command(update: Update, context: ContextTypes.DEFAULT_TYPE):
     await update.message.reply_text(
         "📖 *Qo'llanma:*\n\n"
@@ -38,12 +53,14 @@ async def help_command(update: Update, context: ContextTypes.DEFAULT_TYPE):
         parse_mode="Markdown"
     )
 
+
 def main():
     app = Application.builder().token(BOT_TOKEN).build()
     app.add_handler(CommandHandler("start", start))
     app.add_handler(CommandHandler("yordam", help_command))
     logger.info("Bot ishga tushdi...")
     app.run_polling()
+
 
 if __name__ == "__main__":
     main()
