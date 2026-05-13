@@ -26,9 +26,9 @@ ROLE_FILES = {
     # "shifokor_2": "2_modul_questions_doc.json",  # keyinroq
     # "shifokor_3": "3_modul_questions_doc.json",  # keyinroq
     # "shifokor_4": "4_modul_questions_doc.json",  # keyinroq
-    # "hamshira_2": "2_modul_questions_doc_hamshira.json",  # hozircha bosh
-    # "hamshira_3": "3_modul_questions_doc_hamshira.json",  # hozircha bosh
-    # "hamshira_4": "4_modul_questions_doc_hamshira.json",  # hozircha bosh
+    "hamshira_2": "2_modul_question_med.json",   # hamshiralar 2-modul (faol)
+    # "hamshira_3": "3_modul_question_med.json",  # hozircha bosh
+    # "hamshira_4": "4_modul_question_med.json",  # hozircha bosh
 }
 
 
