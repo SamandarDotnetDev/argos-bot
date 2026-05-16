@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>ARGOS Admin</title>
+<style>
+:root{--bg:#f5f7fb;--card:#fff;--text:#0f172a;--muted:#64748b;--border:#e5e7eb;
+  --primary:#4f46e5;--success:#16a34a;--danger:#dc2626;--warn:#f59e0b;}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;background:var(--bg);color:var(--text);min-height:100vh}
+.hdr{background:linear-gradient(135deg,#4f46e5,#7c3aed);color:#fff;padding:14px 20px;display:flex;justify-content:space-between;align-items:center;box-shadow:0 4px 12px rgba(79,70,229,.25)}
+.hdr h1{font-size:18px;font-weight:800;letter-spacing:.5px}
+.hdr .uid{font-size:12px;opacity:.85}
+.container{max-width:1100px;margin:0 auto;padding:20px}
+.login{max-width:380px;margin:60px auto;background:var(--card);border-radius:14px;padding:24px;box-shadow:0 10px 30px rgba(0,0,0,.08)}
+.login h2{font-size:20px;font-weight:800;margin-bottom:5px}
+.login p{font-size:13px;color:var(--muted);margin-bottom:18px}
+.login input{width:100%;padding:11px 14px;border:1.5px solid var(--border);border-radius:10px;font-size:14px;margin-bottom:10px;font-family:inherit}
+.login button{width:100%;padding:12px;border:none;border-radius:10px;background:var(--primary);color:#fff;font-weight:800;font-size:14px;cursor:pointer}
+
+.tabs{display:flex;gap:6px;background:var(--card);padding:8px;border-radius:12px;margin-bottom:16px;box-shadow:0 2px 8px rgba(0,0,0,.05)}
+.tab{flex:1;padding:9px 12px;background:none;border:none;border-radius:8px;font-size:13px;font-weight:700;color:var(--muted);cursor:pointer;transition:all .15s}
+.tab.active{background:var(--primary);color:#fff}
+
+.stats-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:12px;margin-bottom:18px}
+.stat-c{background:var(--card);border-radius:12px;padding:14px;box-shadow:0 2px 8px rgba(0,0,0,.05)}
+.stat-c .lbl{font-size:11px;color:var(--muted);text-transform:uppercase;font-weight:700;letter-spacing:.5px;margin-bottom:4px}
+.stat-c .val{font-size:22px;font-weight:800;color:var(--primary)}
+.stat-c.success .val{color:var(--success)}
+.stat-c.warn .val{color:var(--warn)}
+.stat-c.danger .val{color:var(--danger)}
+
+.panel{background:var(--card);border-radius:14px;padding:18px;box-shadow:0 2px 12px rgba(0,0,0,.06);margin-bottom:16px}
+.panel h3{font-size:15px;font-weight:800;margin-bottom:14px;display:flex;align-items:center;gap:8px}
+.panel-section{display:none}
+.panel-section.active{display:block}
+
+.pay-item{border:1px solid var(--border);border-radius:12px;padding:14px;margin-bottom:10px;display:grid;grid-template-columns:120px 1fr auto;gap:14px;align-items:start}
+.pay-item img{width:100%;max-height:120px;object-fit:cover;border-radius:8px;cursor:zoom-in;background:#f1f5f9}
+.pay-item .pi-info{font-size:13px;line-height:1.6}
+.pay-item .pi-info b{font-weight:800}
+.pay-item .pi-actions{display:flex;flex-direction:column;gap:6px}
+.pay-item .pi-actions button{padding:8px 14px;border:none;border-radius:8px;font-weight:800;font-size:12px;cursor:pointer;min-width:110px}
+.btn-approve{background:var(--success);color:#fff}
+.btn-reject{background:var(--danger);color:#fff}
+
+table{width:100%;border-collapse:collapse;font-size:13px}
+table th{text-align:left;padding:9px 8px;background:#f8fafc;font-weight:700;color:var(--muted);font-size:11px;text-transform:uppercase;letter-spacing:.4px}
+table td{padding:9px 8px;border-top:1px solid var(--border)}
+
+.zoom-overlay{position:fixed;inset:0;background:rgba(0,0,0,.92);z-index:1000;display:none;align-items:center;justify-content:center;cursor:zoom-out}
+.zoom-overlay.active{display:flex}
+.zoom-overlay img{max-width:95%;max-height:95vh;border-radius:8px}
+
+.empty{text-align:center;padding:40px;color:var(--muted)}
+.loading{text-align:center;padding:30px;color:var(--muted)}
+
+.tag{display:inline-block;font-size:10px;font-weight:800;padding:3px 8px;border-radius:6px;text-transform:uppercase;letter-spacing:.4px}
+.tag.green{background:#dcfce7;color:#15803d}
+.tag.yellow{background:#fef3c7;color:#92400e}
+.tag.red{background:#fee2e2;color:#991b1b}
+.tag.blue{background:#dbeafe;color:#1e40af}
+
+.grant-form{display:flex;gap:8px;flex-wrap:wrap;align-items:center;padding:12px;background:#f8fafc;border-radius:10px;margin-top:10px}
+.grant-form input,.grant-form select{padding:8px 11px;border:1px solid var(--border);border-radius:7px;font-size:13px}
+.grant-form button{padding:8px 14px;background:var(--primary);color:#fff;border:none;border-radius:7px;font-weight:700;font-size:13px;cursor:pointer}
+</style>
+</head>
+<body>
+
+<!-- LOGIN -->
+<div id="sc-login" class="login" style="display:block">
+  <h2>🔐 Admin panel</h2>
+  <p>Telegram user ID raqamingizni kiriting (botda ro'yxatdan o'tgan).</p>
+  <input type="number" id="login-uid" placeholder="Telegram User ID"/>
+  <button onclick="adminLogin()">Kirish</button>
+</div>
+
+<!-- DASHBOARD -->
+<div id="sc-dash" style="display:none">
+  <div class="hdr">
+    <h1>🛡 ARGOS Admin Panel</h1>
+    <div class="uid">ID: <span id="admin-uid">—</span></div>
+  </div>
+
+  <div class="container">
+    <div class="tabs">
+      <button class="tab active" data-tab="dash">📊 Dashboard</button>
+      <button class="tab" data-tab="pending">⏳ Kutilayotgan to'lovlar</button>
+      <button class="tab" data-tab="approved">✅ Tasdiqlangan</button>
+      <button class="tab" data-tab="rejected">❌ Rad etilgan</button>
+      <button class="tab" data-tab="users">👥 Foydalanuvchilar</button>
+    </div>
+
+    <!-- DASHBOARD -->
+    <div class="panel-section active" id="sec-dash">
+      <div class="stats-grid" id="stats-grid"><div class="loading">Yuklanmoqda...</div></div>
+      <div class="panel">
+        <h3>📦 Modullar bo'yicha faol obunalar</h3>
+        <table id="module-table"><thead><tr><th>Modul</th><th>Faol obunalar</th></tr></thead><tbody></tbody></table>
+      </div>
+      <div class="panel">
+        <h3>🎁 Foydalanuvchiga bepul obuna berish</h3>
+        <div class="grant-form">
+          <input type="number" id="grant-uid" placeholder="User ID" style="width:120px"/>
+          <select id="grant-role">
+            <option value="shifokor_1">Shifokor · 1-modul</option>
+            <option value="shifokor_2">Shifokor · 2-modul</option>
+            <option value="shifokor_3">Shifokor · 3-modul</option>
+            <option value="shifokor_4">Shifokor · 4-modul</option>
+            <option value="hamshira_2">Hamshira · 2-modul</option>
+            <option value="hamshira_3">Hamshira · 3-modul</option>
+            <option value="hamshira_4">Hamshira · 4-modul</option>
+          </select>
+          <input type="number" id="grant-days" value="30" style="width:80px"/>
+          <span style="font-size:12px;color:var(--muted)">kun</span>
+          <button onclick="grantSub()">Bering</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- PENDING PAYMENTS -->
+    <div class="panel-section" id="sec-pending">
+      <div class="panel">
+        <h3>⏳ Tasdiqlash kutilayotgan to'lovlar</h3>
+        <div id="pending-list"><div class="loading">Yuklanmoqda...</div></div>
+      </div>
+    </div>
+
+    <!-- APPROVED -->
+    <div class="panel-section" id="sec-approved">
+      <div class="panel">
+        <h3>✅ Tasdiqlangan to'lovlar</h3>
+        <div id="approved-list"><div class="loading">Yuklanmoqda...</div></div>
+      </div>
+    </div>
+
+    <!-- REJECTED -->
+    <div class="panel-section" id="sec-rejected">
+      <div class="panel">
+        <h3>❌ Rad etilgan to'lovlar</h3>
+        <div id="rejected-list"><div class="loading">Yuklanmoqda...</div></div>
+      </div>
+    </div>
+
+    <!-- USERS -->
+    <div class="panel-section" id="sec-users">
+      <div class="panel">
+        <h3>👥 Foydalanuvchilar</h3>
+        <table>
+          <thead><tr><th>User ID</th><th>Ism</th><th>Rol</th><th>Sana</th><th>Javob</th><th>Faol obuna</th></tr></thead>
+          <tbody id="users-list"></tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="zoom-overlay" id="zoom-ov" onclick="this.classList.remove('active')">
+  <img id="zoom-img"/>
+</div>
+
+<script>
+const API="https://argos-bot-production.up.railway.app/api";
+const LS_ADMIN_UID="argos_admin_uid";
+let adminUid=0;
+
+function adminLogin(){
+  const v=document.getElementById("login-uid").value.trim();
+  if(!v||!/^\d+$/.test(v)){alert("Iltimos, raqamli User ID kiriting.");return;}
+  adminUid=parseInt(v);
+  try{localStorage.setItem(LS_ADMIN_UID,adminUid);}catch(e){}
+  initDash();
+}
+
+function logout(){
+  try{localStorage.removeItem(LS_ADMIN_UID);}catch(e){}
+  location.reload();
+}
+
+function initDash(){
+  document.getElementById("sc-login").style.display="none";
+  document.getElementById("sc-dash").style.display="block";
+  document.getElementById("admin-uid").textContent=adminUid;
+  // Tabs
+  document.querySelectorAll(".tab").forEach(t=>{
+    t.onclick=()=>{
+      document.querySelectorAll(".tab").forEach(x=>x.classList.remove("active"));
+      document.querySelectorAll(".panel-section").forEach(x=>x.classList.remove("active"));
+      t.classList.add("active");
+      const id=t.getAttribute("data-tab");
+      document.getElementById("sec-"+id).classList.add("active");
+      loadTab(id);
+    };
+  });
+  loadTab("dash");
+}
+
+async function loadTab(name){
+  if(name==="dash") await loadDashboard();
+  else if(name==="pending") await loadPayments("pending","pending-list");
+  else if(name==="approved") await loadPayments("approved","approved-list");
+  else if(name==="rejected") await loadPayments("rejected","rejected-list");
+  else if(name==="users") await loadUsers();
+}
+
+async function apiGet(path){
+  const r=await fetch(`${API}${path}${path.includes("?")?"&":"?"}admin_user_id=${adminUid}`);
+  if(r.status===403){alert("Sizda admin huquqi yo'q. ADMIN_TG_IDS env'da ID kerak.");logout();return null;}
+  return await r.json();
+}
+
+async function loadDashboard(){
+  const d=await apiGet("/admin/dashboard");
+  if(!d)return;
+  const g=document.getElementById("stats-grid");
+  g.innerHTML=`
+    <div class="stat-c"><div class="lbl">👥 Foydalanuvchilar</div><div class="val">${d.users}</div></div>
+    <div class="stat-c"><div class="lbl">❓ Savollar</div><div class="val">${d.questions}</div></div>
+    <div class="stat-c"><div class="lbl">✍️ Javoblar</div><div class="val">${d.answers}</div></div>
+    <div class="stat-c success"><div class="lbl">✅ Faol obunalar</div><div class="val">${d.active_subs}</div></div>
+    <div class="stat-c warn"><div class="lbl">⏳ Kutilayotgan</div><div class="val">${d.pending_payments}</div></div>
+    <div class="stat-c"><div class="lbl">📦 Tasdiqlangan</div><div class="val">${d.approved_payments}</div></div>
+    <div class="stat-c success"><div class="lbl">💰 Jami daromad</div><div class="val">${(d.total_revenue||0).toLocaleString("uz-UZ")} so'm</div></div>
+  `;
+  const tbody=document.querySelector("#module-table tbody");
+  tbody.innerHTML="";
+  (d.by_module||[]).forEach(m=>{
+    const tr=document.createElement("tr");
+    tr.innerHTML=`<td><b>${m.role_module}</b></td><td>${m.active}</td>`;
+    tbody.appendChild(tr);
+  });
+  if((d.by_module||[]).length===0){
+    tbody.innerHTML='<tr><td colspan="2" style="text-align:center;color:var(--muted)">Hozircha faol obuna yo\'q</td></tr>';
+  }
+}
+
+async function loadPayments(status,containerId){
+  const list=await apiGet(`/admin/payments?status=${status}`);
+  if(!list)return;
+  const c=document.getElementById(containerId);
+  if(!Array.isArray(list)||list.length===0){
+    c.innerHTML='<div class="empty">📭 Hozircha yo\'q</div>';
+    return;
+  }
+  c.innerHTML="";
+  list.forEach(p=>{
+    const div=document.createElement("div");
+    div.className="pay-item";
+    const tag = p.status==="pending" ? '<span class="tag yellow">Kutilmoqda</span>'
+              : p.status==="approved" ? '<span class="tag green">Tasdiqlangan</span>'
+              : '<span class="tag red">Rad etilgan</span>';
+    const imgHtml = p.receipt_url
+      ? `<img src="${p.receipt_url}" onclick="zoom('${p.receipt_url}')"/>`
+      : '<div style="text-align:center;color:#aaa;padding:30px 0;font-size:11px">Rasm yo\'q</div>';
+    const actions = p.status==="pending"
+      ? `<button class="btn-approve" onclick="approvePay(${p.id})">✅ Tasdiqlash</button>
+         <button class="btn-reject" onclick="rejectPay(${p.id})">❌ Rad etish</button>`
+      : `<div style="font-size:11px;color:var(--muted)">${p.decided_at?'Hal qilingan: '+formatDt(p.decided_at):''}</div>`;
+    div.innerHTML=`
+      <div>${imgHtml}</div>
+      <div class="pi-info">
+        ${tag}
+        <div style="margin-top:6px"><b>${p.user_name||'—'}</b> · ID: <code>${p.user_id}</code></div>
+        <div>Modul: <b>${p.role_module}</b></div>
+        <div>Summa: <b>${(p.amount||0).toLocaleString("uz-UZ")} so'm</b></div>
+        <div>Sana: ${formatDt(p.created_at)}</div>
+        ${p.comment?`<div style="margin-top:4px"><i>Izoh:</i> ${p.comment}</div>`:''}
+        ${p.admin_note?`<div style="margin-top:4px;color:#92400e"><i>Admin:</i> ${p.admin_note}</div>`:''}
+      </div>
+      <div class="pi-actions">${actions}</div>`;
+    c.appendChild(div);
+  });
+}
+
+async function approvePay(id){
+  if(!confirm("Bu to'lovni tasdiqlaysizmi? Foydalanuvchiga 30 kun obuna beriladi."))return;
+  const r=await fetch(`${API}/admin/payment/approve`,{method:"POST",headers:{"Content-Type":"application/json"},
+    body:JSON.stringify({payment_id:id,admin_user_id:adminUid,note:""})});
+  if(r.ok){alert("✅ Tasdiqlandi");loadPayments("pending","pending-list");}
+  else alert("Xato: "+((await r.json()).detail||"noma'lum"));
+}
+
+async function rejectPay(id){
+  const note=prompt("Rad etish sababi (ixtiyoriy):")||"";
+  const r=await fetch(`${API}/admin/payment/reject`,{method:"POST",headers:{"Content-Type":"application/json"},
+    body:JSON.stringify({payment_id:id,admin_user_id:adminUid,note})});
+  if(r.ok){alert("Rad etildi");loadPayments("pending","pending-list");}
+  else alert("Xato: "+((await r.json()).detail||"noma'lum"));
+}
+
+async function loadUsers(){
+  const list=await apiGet("/admin/users?limit=200");
+  if(!list)return;
+  const tbody=document.getElementById("users-list");
+  if(!Array.isArray(list)||list.length===0){
+    tbody.innerHTML='<tr><td colspan="6" style="text-align:center;color:var(--muted);padding:30px">Hech kim yo\'q</td></tr>';
+    return;
+  }
+  tbody.innerHTML="";
+  list.forEach(u=>{
+    const tr=document.createElement("tr");
+    const subTag = u.active_subs > 0 ? `<span class="tag green">${u.active_subs} ta</span>` : `<span class="tag red">Yo'q</span>`;
+    tr.innerHTML=`<td><code>${u.user_id}</code></td><td>${u.name||'—'}</td><td><span class="tag blue">${u.role||'—'}</span></td><td style="font-size:11px;color:var(--muted)">${formatDt(u.created_at)}</td><td>${u.answered}</td><td>${subTag}</td>`;
+    tbody.appendChild(tr);
+  });
+}
+
+async function grantSub(){
+  const uid=parseInt(document.getElementById("grant-uid").value);
+  const role=document.getElementById("grant-role").value;
+  const days=parseInt(document.getElementById("grant-days").value)||30;
+  if(!uid){alert("User ID kiriting");return;}
+  if(!confirm(`User ${uid} ga ${role} (${days} kun) obuna beriladi. Davom etamizmi?`))return;
+  const r=await fetch(`${API}/admin/grant?admin_user_id=${adminUid}&target_user_id=${uid}&role_module=${role}&days=${days}`,{method:"POST"});
+  if(r.ok){alert("✅ Obuna berildi");loadDashboard();}
+  else alert("Xato: "+((await r.json()).detail||"noma'lum"));
+}
+
+function formatDt(iso){
+  if(!iso)return"-";
+  try{const d=new Date(iso);return d.toLocaleString("uz-UZ",{day:"2-digit",month:"2-digit",year:"numeric",hour:"2-digit",minute:"2-digit"});}
+  catch(e){return iso;}
+}
+function zoom(src){
+  document.getElementById("zoom-img").src=src;
+  document.getElementById("zoom-ov").classList.add("active");
+}
+
+// Auto-login
+(function init(){
+  let saved="";
+  try{saved=localStorage.getItem(LS_ADMIN_UID)||"";}catch(e){}
+  if(saved&&/^\d+$/.test(saved)){adminUid=parseInt(saved);initDash();}
+})();
+</script>
+</body>
+</html>
